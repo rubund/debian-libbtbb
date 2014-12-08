@@ -19,8 +19,9 @@ VERSION := $(shell dpkg-parsechangelog | sed -n 's/^Version: \(.*\)-.*/\1/p')
 override_dh_auto_configure:
 	dh_auto_configure -- -DPACKAGE_MANAGER=ON -DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH) \
 
-override_dh_install:
-	dh_install
+override_dh_auto_install:
+	dh_auto_install
+	cd python/pcaptools && python setup.py install --root=../../debian/tmp --install-layout=deb
 	# check all necessary headers are included
 	$(CC) -c debian/header-check.c -Idebian/libbtbb-dev/usr/include -o /dev/null
 
