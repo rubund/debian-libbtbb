@@ -24,3 +24,5 @@ override_dh_install:
 	# check all necessary headers are included
 	$(CC) -c debian/header-check.c -Idebian/libbtbb-dev/usr/include -o /dev/null
 
+override_dh_strip:
+	dh_strip -plibbtbb0 --keep-debug --dbg-package=libbtbb0-dbg
