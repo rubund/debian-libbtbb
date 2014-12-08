@@ -1,0 +1,36 @@
+Source: libbtbb
+Section: net
+Priority: optional
+Maintainer: Ruben Undheim <ruben.undheim@gmail.com>
+Build-Depends: debhelper (>= 9),
+               libpcap0.8-dev,
+               cmake
+Standards-Version: 3.9.6
+Vcs-Git: https://github.com/greatscottgadgets/libbtbb.git
+Vcs-Browser: https://github.com/greatscottgadgets/libbtbb/
+Homepage: http://libbtbb.sourceforge.net/
+
+Package: libbtbb0
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: Bluetooth baseband library
+
+Package: libbtbb-dev
+Architecture: any
+Section: libdevel
+Depends: libbtbb0 (= ${binary:Version}),
+         libpcap0.8-dev,
+         ${misc:Depends}
+Description: Bluetooth baseband library - development files
+
+Package: libbtbb0-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: libbtbb0 (= ${binary:Version}),
+         ${misc:Depends}
+Description: Bluetooth baseband library - debug symbols
+
