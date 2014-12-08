@@ -1,5 +1,5 @@
 libbtbb (20141208gitda581a9-1) unstable; urgency=low
 
-  * Self-made package
+  * Initial release (Closes: #772575)
 
- -- Ruben Undheim <ruben.undheim@gmail.com>  Sun, 08 Dec 2014 00:56:56 +0100
+ -- Ruben Undheim <ruben.undheim@gmail.com>  Mon, 08 Dec 2014 18:52:56 +0100
