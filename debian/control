@@ -35,3 +35,9 @@ Depends: libbtbb0 (= ${binary:Version}),
          ${misc:Depends}
 Description: Bluetooth baseband library - debug symbols
 
+Package: libbtbb-pcapdump-python
+Architecture: any
+Section: utils
+Depends: libbtbb0 (= ${binary:Version}),
+         ${misc:Depends}
+Description: pcapdump is the python part of the libbtbb package
