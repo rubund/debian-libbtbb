@@ -3,7 +3,7 @@ Section: net
 Priority: optional
 Maintainer: Ruben Undheim <ruben.undheim@gmail.com>
 Build-Depends: debhelper (>= 9),
-               libpcap0.8-dev,
+               libpcap-dev,
                python-all-dev,
                cmake
 Standards-Version: 3.9.6
@@ -23,7 +23,7 @@ Package: libbtbb-dev
 Architecture: any
 Section: libdevel
 Depends: libbtbb0 (= ${binary:Version}),
-         libpcap0.8-dev,
+         libpcap-dev,
          ${misc:Depends}
 Description: Bluetooth baseband library - development files
 
