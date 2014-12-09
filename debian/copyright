@@ -1,24 +1,244 @@
-The libbtbb web site URL is https://github.com/greatscottgadgets/libbtbb/
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: libbtbb
+Source: https://github.com/greatscottgadgets/libbtbb
 
-Except where otherwise noted in the source code, libbtbb is covered under
-the GNU General Public License (v2 or later).
+Files: *
+Copyright: 2007-2014 Mike Ossmann, Dominic Spill, Will Code
+           2010-2014 Jared Boone
+           2012-2014 Mike Ryan, Christopher Kilgour
+License: GPL-2+
 
-libbtbb is copyright (c) 2010-2014 Dominic Spill, Mike Ossmann, Jared Boone
-libbtbb is copyright (c) 2012-2014 Mike Ryan, Will Code, Christopher Kilgour
+Files: wireshark/plugins/btbredr/cmake/FindWireshark.cmake
+       wireshark/plugins/btatt/cmake/FindWireshark.cmake
+       wireshark/plugins/btle/cmake/FindWireshark.cmake
+       wireshark/plugins/btsm/cmake/FindWireshark.cmake
+       wireshark/plugins/btbb/cmake/FindWireshark.cmake
+Copyright: 2011 Reinhold Kainhofer <reinhold@kainhofer.com>
+License: BSD-3-clause
 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301,  USA.
+Files: wireshark/plugins/btbredr/cmake/FindGLIB2.cmake
+       wireshark/plugins/btatt/cmake/FindGLIB2.cmake
+       wireshark/plugins/btle/cmake/FindGLIB2.cmake
+       wireshark/plugins/btsm/cmake/FindGLIB2.cmake
+       wireshark/plugins/btbb/cmake/FindGLIB2.cmake
+Copyright: 2006 Andreas Schneider <mail@cynapses.org>
+           2006 Philippe Bernery <philippe.bernery@gmail.com>
+           2007 Daniel Gollub <gollub@b1-systems.de>
+           2007 Alban Browaeys <prahal@yahoo.com>
+           2008 Michael Bell <michael.bell@web.de>
+           2008-2009 Bjoern Ricks <bjoern.ricks@googlemail.com>
+License: BSD-3-clause
 
-On Debian systems the GNU GPL (v2) may be viewed in /usr/share/common-licenses/GPL-2.
+Files: wireshark/plugins/btbredr/CMakeLists.txt
+       wireshark/plugins/btatt/CMakeLists.txt
+       wireshark/plugins/btatt/Makefile.common
+       wireshark/plugins/btatt/Makefile.am
+       wireshark/plugins/btle/CMakeLists.txt
+       wireshark/plugins/btle/Makefile.common
+       wireshark/plugins/btle/Makefile.am
+       wireshark/plugins/btsm/CMakeLists.txt
+       wireshark/plugins/btsm/Makefile.common
+       wireshark/plugins/btsm/Makefile.am
+       wireshark/plugins/btbb/CMakeLists.txt
+       wireshark/plugins/btbb/Makefile.common
+       wireshark/plugins/btbb/Makefile.am
+Copyright: 1998 Gerald Combs
+License: GPL-2+
+
+Files: wireshark/plugins/btbredr/packet-btlmp.c
+       wireshark/plugins/btbb/packet-btlmp.c
+Copyright: 1998 Gerald Combs
+           2009 Michael Ossmann <mike@ossmann.com>
+License: GPL-2+
+
+Files: wireshark/plugins/btbredr/packet-btbredr.c
+Copyright: 1998 Gerald Combs
+           2009 Michael Ossmann <mike@ossmann.com>
+           2014 Dominic Spill <dominicgs@gmail.com>
+License: GPL-2+
+
+Files: wireshark/plugins/btbredr/plugin.rc.in
+       wireshark/plugins/btsm/plugin.rc.in
+       wireshark/plugins/btbb/plugin.rc.in
+Copyright: 1998 Gerald Combs <gerald@wireshark.org>
+           1998 Gilmert Ramirez <gram@alumni.rice.edu>
+License: GPL-2+
+
+Files: wireshark/plugins/btatt/packet-btatt.c
+Copyright: 2012 Allan M. Madsen <allan.m@madsen.dk>
+License: GPL-2+
+
+Files: wireshark/plugins/btle/wireshark-1.8-btle-ppi.patch
+       wireshark/plugins/btsm/packet-btsm.c
+Copyright: 1998 Gerald Combs
+           2013 Mike Ryan
+License: GPL-2+
+
+Files: cmake/modules/CMakeParseArguments.cmake
+Copyright: 2010 Alexander Neundorf <neundorf@kde.org
+License: BSD-3-clause
+
+Files: cmake/modules/FindPackageHandleStandardArgs.cmake
+Copyright: 2007-2009 Kitware, Inc
+License: BSD-3-clause
+
+Files: host/cmake/modules/GetGitRevisionDescription.cmake.in
+       host/cmake/modules/GetGitRevisionDescription.cmake
+Copyright: 2009-2010 Iowa State University
+License: Boost-1.0
+
+Files: host/cmake/modules/FindPCAP.cmake
+Copyright: 2006 Frederic Heem <frederic.heem@telsey.it>
+License: BSD-3-clause
+
+Files: host/cmake/modules/FindPythonInterp.cmake
+Copyright: 2005-2010 Kitware, Inc.
+           2011 Bjoern Ricks <bjoern.ricks@gmail.com>
+           2012 Rolf Eike Beer <eike@sf-mail.de>
+License: BSD-3-clause
+
+Files: python/pcaptools/pcapdump/pcapdump.py
+Copyright: 2009 Joshua Wright
+License: GPL-2+
+
+Files: python/pcaptools/btaptap
+Copyright: 2009 Joshua Wright, Michael Ossmann
+License: GPL-2+
+
+Files: lib/src/bluetooth_le_packet.h
+Copyright: 2005,2006 Free Software Foundation, Inc
+           2007-2012 Mike Ryan, Dominic Spill, Michael Ossmann
+License: GPL-2+
+
+Files: lib/src/uthash.h
+Copyright: 2003-2013 Troy D. Hanson
+License: uthash-license
+
+Files: debian/*
+Copyright: 2014 Ruben Undheim <ruben.undheim@gmail.com>
+License: GPL-2+
+
+
+
+License: GPL-2+
+ This package is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 2 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General
+ Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
+
+
+License: GPL-3+
+ This package is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General
+ Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
+
+
+License: LGPL-2.1+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library. If not, see <http://www.gnu.org/licenses/>
+ .
+ On Debian systems, the complete text of the GNU Lesser General
+ Public License version 2.1 can be found in
+ "/usr/share/common-licenses/LGPL-2.1".
+
+
+License: BSD-3-clause
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ .
+ 1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+ 3. The name of the author may not be used to endorse or promote products
+    derived from this software without specific prior written permission.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
+ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+License: Boost-1.0
+ Permission is hereby granted, free of charge, to any person or organization
+ obtaining a copy of the software and accompanying documentation covered by
+ this license (the "Software") to use, reproduce, display, distribute,
+ execute, and transmit the Software, and to prepare derivative works of the
+ Software, and to permit third-parties to whom the Software is furnished to
+ do so, all subject to the following:
+ .
+ The copyright notices in the Software and this entire statement, including
+ the above license grant, this restriction and the following disclaimer,
+ must be included in all copies of the Software, in whole or in part, and
+ all derivative works of the Software, unless such copies or derivative
+ works are solely in the form of machine-executable object code generated by
+ a source language processor.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+ SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ DEALINGS IN THE SOFTWARE.
+
+
+License: uthash-license
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ .
+     * Redistributions of source code must retain the above copyright
+       notice, this list of conditions and the following disclaimer.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+ OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
