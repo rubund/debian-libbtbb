@@ -52,6 +52,7 @@ Package: python-libbtbb-pcapdump
 Architecture: any
 Section: python
 Depends: libbtbb0 (= ${binary:Version}),
+         python,
          ${misc:Depends}
 Description: pcapdump is a Python module for pcap delivered by libbtbb
  This module may be used to read and write pcap files produced by
