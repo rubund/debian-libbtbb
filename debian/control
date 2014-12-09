@@ -7,8 +7,8 @@ Build-Depends: debhelper (>= 9),
                python-all-dev,
                cmake
 Standards-Version: 3.9.6
-Vcs-Git: https://github.com/greatscottgadgets/libbtbb.git
-Vcs-Browser: https://github.com/greatscottgadgets/libbtbb/
+Vcs-Git: git://github.com/rubund/debian-libbtbb.git
+Vcs-Browser: https://github.com/rubund/debian-libbtbb/tree/master
 Homepage: http://libbtbb.sourceforge.net/
 
 Package: libbtbb0
