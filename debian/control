@@ -1,4 +1,5 @@
 Source: libbtbb
+Section: libs
 Priority: optional
 Maintainer: Ruben Undheim <ruben.undheim@gmail.com>
 Build-Depends: debhelper (>= 9),
@@ -12,11 +13,13 @@ Homepage: http://libbtbb.sourceforge.net/
 
 Package: libbtbb0
 Architecture: any
-Section: libs
 Depends: ${shlibs:Depends},
          ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
-Description: Bluetooth baseband library
+Description: Bluetooth baseband decoding library
+ This is the Bluetooth baseband decoding library, forked from the GR-Bluetooth
+ project. It can be used to extract Bluetooth packet and piconet information
+ from Ubertooth devices as well as GR-Bluetooth/USRP.
 
 Package: libbtbb-dev
 Architecture: any
@@ -24,7 +27,12 @@ Section: libdevel
 Depends: libbtbb0 (= ${binary:Version}),
          libpcap-dev,
          ${misc:Depends}
-Description: Bluetooth baseband library - development files
+Description: Bluetooth baseband decoding library - development files
+ This is the Bluetooth baseband decoding library, forked from the GR-Bluetooth
+ project. It can be used to extract Bluetooth packet and piconet information
+ from Ubertooth devices as well as GR-Bluetooth/USRP.
+ .
+ This package provides the development files for using the btbb library.
 
 Package: libbtbb0-dbg
 Architecture: any
@@ -32,11 +40,20 @@ Section: debug
 Priority: extra
 Depends: libbtbb0 (= ${binary:Version}),
          ${misc:Depends}
-Description: Bluetooth baseband library - debug symbols
+Description: Bluetooth baseband decoding library - debugging symbols
+ This is the Bluetooth baseband decoding library, forked from the GR-Bluetooth
+ project. It can be used to extract Bluetooth packet and piconet information
+ from Ubertooth devices as well as GR-Bluetooth/USRP.
+ .
+ This package contains the debugging files used to investigate problems with
+ the btbb library.
 
 Package: python-libbtbb-pcapdump
 Architecture: any
 Section: python
 Depends: libbtbb0 (= ${binary:Version}),
          ${misc:Depends}
-Description: pcapdump is the python part of the libbtbb package
+Description: pcapdump is a Python module for pcap delivered by libbtbb
+ This module may be used to read and write pcap files produced by
+ libbtbb. Actually libbtbb doesn't produce such files by itself at this
+ 3 time, but you can produce them with the Ubertooth tools.
