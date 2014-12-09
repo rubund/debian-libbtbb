@@ -14,7 +14,7 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 	dh $@ --buildsystem cmake
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DPACKAGE_MANAGER=ON -DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH) \
+	dh_auto_configure -- -DLIB_SUFFIX=/$(DEB_HOST_MULTIARCH) \
 
 override_dh_auto_install:
 	dh_auto_install
