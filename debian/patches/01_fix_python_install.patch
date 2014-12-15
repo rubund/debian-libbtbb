@@ -1,0 +1,14 @@
+Description: Fixes the install command for the python part
+Author: Ruben Undheim <ruben.undheim@gmail.com>
+
+--- libbtbb-2014.11.26+gitf83b85c.orig/python/pcaptools/CMakeLists.txt
++++ libbtbb-2014.11.26+gitf83b85c/python/pcaptools/CMakeLists.txt
+@@ -31,7 +31,7 @@ add_custom_command(OUTPUT ${OUTPUT}/time
+                    DEPENDS ${DEPS})
+ 
+ add_custom_target(pcapdump ALL DEPENDS ${OUTPUT}/timestamp)
+-install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${SETUP_PY} build -b ${OUTPUT} install --prefix=${BUILD_ROOT}/${CMAKE_INSTALL_PREFIX})")
++install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${SETUP_PY} install --root=${CMAKE_SOURCE_DIR}/debian/tmp --install-layout=deb)")
+ 
+ add_custom_target(btaptap ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/btaptap)
+ install(PROGRAMS btaptap DESTINATION ${INSTALL_DEFAULT_BINDIR})
