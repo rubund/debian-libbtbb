@@ -57,4 +57,4 @@ Depends: libbtbb0 (= ${binary:Version}),
 Description: pcapdump is a Python module for pcap delivered by libbtbb
  This module may be used to read and write pcap files produced by
  libbtbb. Actually libbtbb doesn't produce such files by itself at this
- 3 time, but you can produce them with the Ubertooth tools.
+ time, but you can produce them with the Ubertooth tools.
