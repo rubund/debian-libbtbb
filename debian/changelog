@@ -3,6 +3,7 @@ libbtbb (2014.11.26+gitf83b85c-2) unstable; urgency=medium
   * Fixed erroneous pkg-config file.
     - 02_fix_pkgconfig.patch
   * Fixed small typo in long description
+
  -- Ruben Undheim <ruben.undheim@gmail.com>  Sat, 14 Feb 2015 09:31:04 +0100
 
 libbtbb (2014.11.26+gitf83b85c-1) unstable; urgency=low
