@@ -4,7 +4,10 @@ libbtbb (2014.11.26+gitf83b85c-2) unstable; urgency=medium
     - Added "Multi-Arch: same" to allow libbtbb0 to be
       installed for multiple architectures
     - Fixed small typo in long description
-    - Make python-libbtbb-pcadump arch:all
+    - Make python-libbtbb-pcapdump arch:all
+    - Changed the dependency for python-libbtbb-pcapdump
+      from (= ${binary:Version}) to (>= ${source:Version})
+      to avoid lintian.
   * debian/patches/02_fix_pkgconfig.patch:
     - Fixed erroneous pkg-config file.
 

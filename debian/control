@@ -54,7 +54,7 @@ Description: Bluetooth baseband decoding library - debugging symbols
 Package: python-libbtbb-pcapdump
 Architecture: all
 Section: python
-Depends: libbtbb0 (= ${binary:Version}),
+Depends: libbtbb0 (>= ${source:Version}),
          python,
          ${misc:Depends}
 Description: pcapdump is a Python module for pcap delivered by libbtbb
