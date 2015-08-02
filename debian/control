@@ -16,6 +16,7 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
+Multi-Arch: same
 Description: Bluetooth baseband decoding library
  This is the Bluetooth baseband decoding library, forked from the GR-Bluetooth
  project. It can be used to extract Bluetooth packet and piconet information
@@ -27,6 +28,7 @@ Section: libdevel
 Depends: libbtbb0 (= ${binary:Version}),
          libpcap-dev,
          ${misc:Depends}
+Multi-Arch: same
 Description: Bluetooth baseband decoding library - development files
  This is the Bluetooth baseband decoding library, forked from the GR-Bluetooth
  project. It can be used to extract Bluetooth packet and piconet information
@@ -40,6 +42,7 @@ Section: debug
 Priority: extra
 Depends: libbtbb0 (= ${binary:Version}),
          ${misc:Depends}
+Multi-Arch: same
 Description: Bluetooth baseband decoding library - debugging symbols
  This is the Bluetooth baseband decoding library, forked from the GR-Bluetooth
  project. It can be used to extract Bluetooth packet and piconet information
