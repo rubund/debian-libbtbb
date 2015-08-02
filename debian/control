@@ -52,7 +52,7 @@ Description: Bluetooth baseband decoding library - debugging symbols
  the btbb library.
 
 Package: python-libbtbb-pcapdump
-Architecture: any
+Architecture: all
 Section: python
 Depends: libbtbb0 (= ${binary:Version}),
          python,
