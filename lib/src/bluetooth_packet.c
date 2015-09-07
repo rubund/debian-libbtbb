@@ -79,17 +79,6 @@ static const uint64_t sw_matrix[] = {
 	0x00000203ef526bd1ULL, 0x000001033511ab3cULL, 0x000000819a88d59eULL, 0x00000040cd446acfULL,
 	0x00000022a41aabb3ULL, 0x0000001390b5cb0dULL, 0x0000000b0ae27b52ULL, 0x0000000585713da9ULL};
 
-static const uint64_t syndrome_matrix[] = {
-	0x4be2573a00000000ULL, 0x25f12b9d00000000ULL, 0x591ac2f480000000ULL, 0x676f364040000000ULL,
-	0x33b79b2020000000ULL, 0x19dbcd9010000000ULL, 0x0cede6c808000000ULL, 0x0676f36404000000ULL,
-	0x48d92e8802000000ULL, 0x246c974401000000ULL, 0x59d41c9800800000ULL, 0x2cea0e4c00400000ULL,
-	0x5d97501c00200000ULL, 0x6529ff3400100000ULL, 0x7976a8a000080000ULL, 0x3cbb545000040000ULL,
-	0x1e5daa2800020000ULL, 0x0f2ed51400010000ULL, 0x4c753db000008000ULL, 0x263a9ed800004000ULL,
-	0x131d4f6c00002000ULL, 0x426cf08c00001000ULL, 0x6ad42f7c00000800ULL, 0x7e88408400000400ULL,
-	0x74a6777800000200ULL, 0x3a533bbc00000100ULL, 0x56cbcae400000080ULL, 0x6087b24800000040ULL,
-	0x3043d92400000020ULL, 0x53c3bba800000010ULL, 0x29e1ddd400000008ULL, 0x5f12b9d000000004ULL,
-	0x2f895ce800000002ULL, 0x97c4ae7400000001ULL};
-
 static const uint64_t barker_correct[] = {
 	0xb000000000000000ULL, 0x4e00000000000000ULL, 0x4e00000000000000ULL, 0x4e00000000000000ULL,
 	0x4e00000000000000ULL, 0x4e00000000000000ULL, 0x4e00000000000000ULL, 0x4e00000000000000ULL,
@@ -253,20 +242,25 @@ static uint64_t air_to_host64(const char *air_order, const int bits)
 	return host_order;
 }
 
-/* Convert some number of bits in a host order integer to an air order array */
-static void host_to_air(const uint8_t host_order, char *air_order, const int bits)
-{
-    int i;
-    for (i = 0; i < bits; i++)
-        air_order[i] = (host_order >> i) & 0x01;
-}
+///* Convert some number of bits in a host order integer to an air order array */
+//static void host_to_air(const uint8_t host_order, char *air_order, const int bits)
+//{
+//    int i;
+//    for (i = 0; i < bits; i++)
+//        air_order[i] = (host_order >> i) & 0x01;
+//}
+
 /* count the number of 1 bits in a uint64_t */
 static uint8_t count_bits(uint64_t n)
 {
+#ifdef __GNUC__
+	return (uint8_t) __builtin_popcountll (n);
+#else
 	uint8_t i = 0;
 	for (i = 0; n != 0; i++)
 		n &= n - 1;
 	return i;
+#endif
 }
 
 #ifndef RELEASE
@@ -302,7 +296,10 @@ btbb_packet *
 btbb_packet_new(void)
 {
 	btbb_packet *pkt = (btbb_packet *)calloc(1, sizeof(btbb_packet));
-	pkt->refcount = 1;
+	if(pkt)
+		pkt->refcount = 1;
+	else
+		fprintf(stderr, "Unable to allocate packet");
 	return pkt;
 }
 
@@ -369,8 +366,9 @@ uint8_t btbb_packet_get_ac_errors(const btbb_packet *pkt) {
 	return pkt->ac_errors;
 }
 
-int promiscuous_packet_search(char *stream, int search_length, uint32_t *lap, int max_ac_errors, uint8_t *ac_errors) {
-	uint64_t syncword, codeword, syndrome, corrected_barker, ac;
+int promiscuous_packet_search(char *stream, int search_length, uint32_t *lap,
+							  int max_ac_errors, uint8_t *ac_errors) {
+	uint64_t syncword, codeword, syndrome, corrected_barker;
 	syndrome_struct *errors;
 	char *symbols;
 	int count, offset = -1;
@@ -423,9 +421,9 @@ int promiscuous_packet_search(char *stream, int search_length, uint32_t *lap, in
 }
 
 /* Matching a specific LAP */
-int find_known_lap(char *stream, int search_length, uint32_t lap, int max_ac_errors, uint8_t *ac_errors) {
-	uint64_t syncword, codeword, syndrome, corrected_barker, ac;
-	syndrome_struct *errors;
+int find_known_lap(char *stream, int search_length, uint32_t lap,
+				   int max_ac_errors, uint8_t *ac_errors) {
+	uint64_t syncword, ac;
 	char *symbols;
 	int count, offset = -1;
 	
@@ -437,7 +435,6 @@ int find_known_lap(char *stream, int search_length, uint32_t lap, int max_ac_err
 
 		if (*ac_errors <= max_ac_errors) {
 			offset = count;
-			//printf("Offset = %d\n", offset);
 			break;
 		}
 	}
@@ -445,7 +442,8 @@ int find_known_lap(char *stream, int search_length, uint32_t lap, int max_ac_err
 }
 
 /* Looks for an AC in the stream */
-int btbb_find_ac(char *stream, int search_length, uint32_t lap, int max_ac_errors, btbb_packet **pkt_ptr) {
+int btbb_find_ac(char *stream, int search_length, uint32_t lap,
+				 int max_ac_errors, btbb_packet **pkt_ptr) {
 	int offset;
 	uint8_t ac_errors;
 
@@ -467,7 +465,8 @@ int btbb_find_ac(char *stream, int search_length, uint32_t lap, int max_ac_error
 }
 
 /* Copy data (symbols) into packet and set rx data. */
-void btbb_packet_set_data(btbb_packet *pkt, char *data, int length, uint8_t channel, uint32_t clkn)
+void btbb_packet_set_data(btbb_packet *pkt, char *data, int length,
+						  uint8_t channel, uint32_t clkn)
 {
 	int i;
 
@@ -541,22 +540,6 @@ uint8_t btbb_packet_get_hec(const btbb_packet* pkt)
 uint32_t btbb_packet_get_header_packed(const btbb_packet* pkt)
 {
 	return air_to_host32(&pkt->packet_header[0], 18);
-}
-
-/* Compare stream with sync word
- * Unused, but useful to correct >3 bit errors with known LAP
- */
-static int check_syncword(uint64_t streamword, uint64_t syncword)
-{
-	uint8_t biterrors;
-
-	//FIXME do error correction instead of detection
-	biterrors = count_bits(streamword ^ syncword);
-
-	if (biterrors >= 5)
-		return 0;
-
-	return 1;
 }
 
 /* Reverse the bits in a byte */
@@ -1300,6 +1283,7 @@ int btbb_decode_payload(btbb_packet* pkt)
 		case PACKET_TYPE_EV5:
 			/* assuming EV5 but could be 3-EV5 */
 			rv = EV5(pkt->clock, pkt);
+			break;
 		case PACKET_TYPE_DM5:
 			/* assuming DM5 but could be 2-DH5 */
 			rv = DM(pkt->clock, pkt);

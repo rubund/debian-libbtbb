@@ -106,6 +106,8 @@ uint16_t btbb_packet_get_nap(const btbb_packet *pkt);
 
 void btbb_packet_set_modulation(btbb_packet *pkt, uint8_t modulation);
 void btbb_packet_set_transport(btbb_packet *pkt, uint8_t transport);
+uint8_t btbb_packet_get_modulation(const btbb_packet *pkt);
+uint8_t btbb_packet_get_transport(const btbb_packet *pkt);
 
 uint8_t btbb_packet_get_channel(const btbb_packet *pkt);
 uint8_t btbb_packet_get_ac_errors(const btbb_packet *pkt);
@@ -222,20 +224,8 @@ int btbb_pcapng_record_btclock(btbb_pcapng_handle * h, const uint64_t bdaddr,
                                const uint64_t ns, const uint32_t clk, const uint32_t clkmask);
 int btbb_pcapng_close(btbb_pcapng_handle * h);
 
-#if defined(USE_PCAP)
-typedef struct btbb_pcap_handle btbb_pcap_handle;
-/* create a PCAP file for BREDR captures with LINKTYPE_BLUETOOTH_BREDR_BB */
-int btbb_pcap_create_file(const char *filename, btbb_pcap_handle ** ph);
-/* write a BREDR packet to PCAP file */
-int btbb_pcap_append_packet(btbb_pcap_handle * h, const uint64_t ns, 
-                            const int8_t sigdbm, const int8_t noisedbm,
-                            const uint32_t reflap, const uint8_t refuap, 
-                            const btbb_packet *pkt);
-int btbb_pcap_close(btbb_pcap_handle * h);
-#endif
 
-/* BTLE support */
-
+/* BLE support */
 typedef struct lell_packet lell_packet;
 /* decode and allocate LE packet */
 void lell_allocate_and_decode(const uint8_t *stream, uint16_t phys_channel, uint32_t clk100ns, lell_packet **pkt);
@@ -261,7 +251,19 @@ int lell_pcapng_append_packet(lell_pcapng_handle * h, const uint64_t ns,
 int lell_pcapng_record_connect_req(lell_pcapng_handle * h, const uint64_t ns, const uint8_t * pdu);
 int lell_pcapng_close(lell_pcapng_handle *h);
 
-#if defined(USE_PCAP)
+
+/* PCAP Support */
+#if defined(ENABLE_PCAP)
+typedef struct btbb_pcap_handle btbb_pcap_handle;
+/* create a PCAP file for BREDR captures with LINKTYPE_BLUETOOTH_BREDR_BB */
+int btbb_pcap_create_file(const char *filename, btbb_pcap_handle ** ph);
+/* write a BREDR packet to PCAP file */
+int btbb_pcap_append_packet(btbb_pcap_handle * h, const uint64_t ns, 
+                            const int8_t sigdbm, const int8_t noisedbm,
+                            const uint32_t reflap, const uint8_t refuap, 
+                            const btbb_packet *pkt);
+int btbb_pcap_close(btbb_pcap_handle * h);
+
 typedef struct lell_pcap_handle lell_pcap_handle;
 /* create a PCAP file for LE captures using LINKTYPE_BLUETOOTH_LE_LL_WITH_PHDR */
 int lell_pcap_create_file(const char *filename, lell_pcap_handle ** ph);
@@ -277,7 +279,7 @@ int lell_pcap_append_ppi_packet(lell_pcap_handle * h, const uint64_t ns,
                                 const int8_t rssi_avg, const uint8_t rssi_count,
                                 const lell_packet *pkt);
 int lell_pcap_close(lell_pcap_handle *h);
-#endif
+#endif // ENABLE_PCAP
 
 #ifdef __cplusplus
 } // __cplusplus defined.

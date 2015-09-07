@@ -72,11 +72,15 @@ ELSE(EXISTS $ENV{PCAPDIR})
     NAMES
     pcap/pcap.h
     pcap.h
+    HINTS
+      /usr/local/opt/libpcap/include
   )
 
   FIND_LIBRARY(PCAP_LIBRARY
     NAMES
       pcap
+    HINTS
+      /usr/local/opt/libpcap/lib
   )
 
 ENDIF(EXISTS $ENV{PCAPDIR})
