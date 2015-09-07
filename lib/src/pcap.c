@@ -34,14 +34,14 @@ typedef enum {
 	PCAP_NO_MEMORY,
 } PCAP_RESULT;
 
-#if defined(USE_PCAP)
+#if defined(ENABLE_PCAP)
 
 /* BT BR/EDR support */
 
-typedef struct btbb_pcap_handle {
+struct btbb_pcap_handle {
 	pcap_t *        pcap;
 	pcap_dumper_t * dumper;
-} btbb_pcap_handle;
+};
 
 int 
 btbb_pcap_create_file(const char *filename, btbb_pcap_handle ** ph)
@@ -91,7 +91,7 @@ typedef struct {
 
 static void
 assemble_pcapng_bredr_packet( pcap_bredr_packet * pkt,
-			      const uint32_t interface_id,
+			      const uint32_t interface_id __attribute__((unused)),
 			      const uint64_t ns,
 			      const uint32_t caplen,
 			      const uint8_t rf_channel,
@@ -195,12 +195,12 @@ btbb_pcap_close(btbb_pcap_handle * h)
 
 /* BTLE support */
 
-typedef struct lell_pcap_handle {
+struct lell_pcap_handle {
 	pcap_t * pcap;
 	pcap_dumper_t * dumper;
 	int dlt;
 	uint8_t btle_ppi_version;
-} lell_pcap_handle;
+};
 
 static int
 lell_pcap_create_file_dlt(const char *filename, int dlt, lell_pcap_handle ** ph)
@@ -267,7 +267,7 @@ typedef struct {
 
 static void
 assemble_pcapng_le_packet( pcap_le_packet * pkt,
-			   const uint32_t interface_id,
+			   const uint32_t interface_id __attribute__((unused)),
 			   const uint64_t ns,
 			   const uint32_t caplen,
 			   const uint8_t rf_channel,
@@ -363,9 +363,9 @@ lell_pcap_append_ppi_packet(lell_pcap_handle * h, const uint64_t ns,
 			    const int8_t rssi_avg, const uint8_t rssi_count,
 			    const lell_packet *pkt)
 {
-	const ppi_packet_header_sz = sizeof(ppi_packet_header_t);
-	const ppi_fieldheader_sz = sizeof(ppi_fieldheader_t);
-	const le_ll_ppi_header_sz = sizeof(ppi_btle_t);
+	const uint16_t ppi_packet_header_sz = sizeof(ppi_packet_header_t);
+	const uint16_t ppi_fieldheader_sz = sizeof(ppi_fieldheader_t);
+	const uint16_t le_ll_ppi_header_sz = sizeof(ppi_btle_t);
 
 	if (h && h->dumper && 
 	    (h->dlt == DLT_PPI)) {
@@ -419,4 +419,4 @@ lell_pcap_close(lell_pcap_handle *h)
 	return -PCAP_INVALID_HANDLE;
 }
 
-#endif /* USE_PCAP */
+#endif /* ENABLE_PCAP */

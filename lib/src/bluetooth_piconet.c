@@ -29,6 +29,15 @@
 int perm_table_initialized = 0;
 char perm_table[0x20][0x20][0x200];
 
+/* count the number of 1 bits in a uint64_t */
+int count_bits(uint8_t n)
+{
+	int i = 0;
+	for (i = 0; n != 0; i++)
+		n &= n - 1;
+	return i;
+}
+
 btbb_piconet *
 btbb_piconet_new(void)
 {
@@ -109,9 +118,14 @@ void btbb_piconet_set_clk_offset(btbb_piconet *pn, int clk_offset)
 
 void btbb_piconet_set_afh_map(btbb_piconet *pn, uint8_t *afh_map) {
 	int i;
+	pn->used_channels = 0;
 	// DGS: Unroll this?
-	for(i=0; i<10; i++)
+	for(i=0; i<10; i++) {
 		pn->afh_map[i] = afh_map[i];
+		pn->used_channels += count_bits(pn->afh_map[i]);
+	}
+	if(btbb_piconet_get_flag(pn, BTBB_UAP_VALID))
+		get_hop_pattern(pn);
 }
 
 uint8_t *btbb_piconet_get_afh_map(btbb_piconet *pn) {
@@ -120,17 +134,44 @@ uint8_t *btbb_piconet_get_afh_map(btbb_piconet *pn) {
 
 void btbb_piconet_set_channel_seen(btbb_piconet *pn, uint8_t channel)
 {
-	pn->afh_map[channel/8] |= 0x1 << (channel % 8);
+	if(!(pn->afh_map[channel/8] & 0x1 << (channel % 8))) {
+		pn->afh_map[channel/8] |= 0x1 << (channel % 8);
+		pn->used_channels++;
+		if(btbb_piconet_get_flag(pn, BTBB_UAP_VALID))
+			get_hop_pattern(pn);
+	}
+}
+
+uint8_t btbb_piconet_get_channel_seen(btbb_piconet *pn, uint8_t channel)
+{
+	if(channel < BT_NUM_CHANNELS)
+		return ( pn->afh_map[channel/8] & (1 << (channel % 8)) ) != 0;
+	else
+		return 1;
 }
 
 /* do all the precalculation that can be done before knowing the address */
 void precalc(btbb_piconet *pn)
 {
-	int i;
+	int i = 0;
+	int j = 0;
+	int chan;
 
 	/* populate frequency register bank*/
-	for (i = 0; i < BT_NUM_CHANNELS; i++)
+	for (i = 0; i < BT_NUM_CHANNELS; i++) {
+
+		/* AFH is used, hopping sequence contains only used channels */
+		if(btbb_piconet_get_flag(pn, BTBB_IS_AFH)) {
+			chan = (i * 2) % BT_NUM_CHANNELS;
+			if(btbb_piconet_get_channel_seen(pn, chan))
+				pn->bank[j++] = chan;
+		} 
+
+		/* all channels are used */
+		else {
 			pn->bank[i] = ((i * 2) % BT_NUM_CHANNELS);
+		}
+	}
 	/* actual frequency is 2402 + pn->bank[i] MHz */
 
 }
@@ -255,13 +296,16 @@ static void gen_hops(btbb_piconet *pn)
 	/* a, b, c, d, e, f, x, y1, y2 are variable names used in section 2.6 of the spec */
 	/* b is already defined */
 	/* e is already defined */
-	int a, c, d, f, x;
+	int a, c, d, x;
+	uint32_t base_f, f, f_dash;
 	int h, i, j, k, c_flipped, perm_in, perm_out;
 
 	/* sequence index = clock >> 1 */
 	/* (hops only happen at every other clock value) */
 	int index = 0;
+	base_f = 0;
 	f = 0;
+	f_dash = 0;
 
 	/* nested loops for optimization (not recalculating every variable with every clock tick) */
 	for (h = 0; h < 0x04; h++) { /* clock bits 26-27 */
@@ -274,19 +318,26 @@ static void gen_hops(btbb_piconet *pn)
 					d = pn->d1 ^ k;
 					for (x = 0; x < 0x20; x++) { /* clock bits 2-6 */
 						perm_in = ((x + a) % 32) ^ pn->b;
+
 						/* y1 (clock bit 1) = 0, y2 = 0 */
 						perm_out = fast_perm(perm_in, c, d);
-						pn->sequence[index] = pn->bank[(perm_out + pn->e + f) % BT_NUM_CHANNELS];
-						if (btbb_piconet_get_flag(pn, BTBB_IS_AFH)) {
-							pn->sequence[index + 1] = pn->sequence[index];
-						} else {
-							/* y1 (clock bit 1) = 1, y2 = 32 */
-							perm_out = fast_perm(perm_in, c_flipped, d);
+						if (btbb_piconet_get_flag(pn, BTBB_IS_AFH))
+							pn->sequence[index] = pn->bank[(perm_out + pn->e + f_dash) % pn->used_channels];
+						else
+							pn->sequence[index] = pn->bank[(perm_out + pn->e + f) % BT_NUM_CHANNELS];
+
+						/* y1 (clock bit 1) = 1, y2 = 32 */
+						perm_out = fast_perm(perm_in, c_flipped, d);
+						if (btbb_piconet_get_flag(pn, BTBB_IS_AFH))
+							pn->sequence[index + 1] = pn->bank[(perm_out + pn->e + f_dash + 32) % pn->used_channels];
+						else
 							pn->sequence[index + 1] = pn->bank[(perm_out + pn->e + f + 32) % BT_NUM_CHANNELS];
-						}
+
 						index += 2;
 					}
-					f += 16;
+					base_f += 16;
+					f = base_f % BT_NUM_CHANNELS;
+					f_dash = f % pn->used_channels;
 				}
 			}
 		}
@@ -319,31 +370,32 @@ static hopping_struct *hopping_map = NULL;
 /* Function to fetch piconet hopping patterns */
 void get_hop_pattern(btbb_piconet *pn)
 {
-       hopping_struct *s;
-       uint64_t key;
-
-	   /* Two stages to avoid "left shift count >= width of type" warning */
-       key = btbb_piconet_get_flag(pn, BTBB_IS_AFH);
-       key = (key<<32) | (pn->UAP<<24) | pn->LAP;
-       HASH_FIND(hh, hopping_map, &key, 4, s);
-       
-       if (s == NULL) {
-               gen_hop_pattern(pn);
-               s = malloc(sizeof(hopping_struct));
-               s->key = key;
-               s->sequence = pn->sequence;
-               HASH_ADD(hh, hopping_map, key, 4, s);
-       } else {
-               printf("\nFound hopping sequence in cache.\n");
-               pn->sequence = s->sequence;
-       }
+	hopping_struct *s;
+	uint64_t key;
+ 
+	/* Two stages to avoid "left shift count >= width of type" warning */
+	key = btbb_piconet_get_flag(pn, BTBB_IS_AFH);
+	key = (key<<39) | ((uint64_t)pn->used_channels<<32) | (pn->UAP<<24) | pn->LAP;
+	HASH_FIND(hh, hopping_map, &key, 4, s);
+	
+	if (s == NULL) {
+		gen_hop_pattern(pn);
+		s = malloc(sizeof(hopping_struct));
+		s->key = key;
+		s->sequence = pn->sequence;
+		HASH_ADD(hh, hopping_map, key, 4, s);
+	} else {
+		printf("\nFound hopping sequence in cache.\n");
+		pn->sequence = s->sequence;
+	}
 }
 
 /* determine channel for a particular hop */
-/* replaced with gen_hops() for a complete sequence but could still come in handy */
+/* borrowed from ubertooth firmware to support AFH */
 char single_hop(int clock, btbb_piconet *pn)
 {
-	int a, c, d, f, x, y1, y2;
+	int a, c, d, x, y1, y2, perm, next_channel;
+	uint32_t base_f, f, f_dash;
 
 	/* following variable names used in section 2.6 of the spec */
 	x = (clock >> 2) & 0x1f;
@@ -354,10 +406,21 @@ char single_hop(int clock, btbb_piconet *pn)
 	c = (pn->c1 ^ (clock >> 16)) & 0x1f;
 	d = (pn->d1 ^ (clock >> 7)) & 0x1ff;
 	/* e is already defined */
-	f = (clock >> 3) & 0x1fffff0;
+	base_f = (clock >> 3) & 0x1fffff0;
+	f = base_f % BT_NUM_CHANNELS;
 
+	perm = fast_perm(
+		((x + a) % 32) ^ pn->b,
+		(y1 * 0x1f) ^ c,
+		d);
 	/* hop selection */
-	return(pn->bank[(fast_perm(((x + a) % 32) ^ pn->b, (y1 * 0x1f) ^ c, d) + pn->e + f + y2) % BT_NUM_CHANNELS]);
+	if(btbb_piconet_get_flag(pn, BTBB_IS_AFH)) {
+		f_dash = base_f % pn->used_channels;
+		next_channel = pn->bank[(perm + pn->e + f_dash + y2) % pn->used_channels];
+	} else {
+		next_channel = pn->bank[(perm + pn->e + f + y2) % BT_NUM_CHANNELS];
+	}
+	return next_channel;
 }
 
 /* look up channel for a particular hop */
@@ -368,7 +431,7 @@ char hop(int clock, btbb_piconet *pn)
 
 static char aliased_channel(char channel)
 {
-		return ((channel + 24) % ALIASED_CHANNELS) + 26;
+	return ((channel + 24) % ALIASED_CHANNELS) + 26;
 }
 
 /* create list of initial candidate clock values (hops with same channel as first observed hop) */
@@ -447,7 +510,6 @@ void try_hop(btbb_packet *pkt, btbb_piconet *pn)
 		} else {
 			if (btbb_uap_from_header(pkt, pn)) {
 				if (filter_uap == pn->UAP) {
-					printf("got CLK1-6\n");
 					btbb_init_hop_reversal(0, pn);
 					btbb_winnow(pn);
 				} else {
@@ -486,7 +548,7 @@ static void reset(btbb_piconet *pn)
 	 */
 	btbb_piconet_set_flag(pn, BTBB_IS_AFH,
 			      btbb_piconet_get_flag(pn, BTBB_LOOKS_LIKE_AFH));
-	btbb_piconet_set_flag(pn, BTBB_LOOKS_LIKE_AFH, 0);
+	// btbb_piconet_set_flag(pn, BTBB_LOOKS_LIKE_AFH, 0);
 	//int i;
 	//for(i=0; i<10; i++)
 	//	pn->afh_map[i] = 0;
@@ -579,7 +641,7 @@ int btbb_uap_from_header(btbb_packet *pkt, btbb_piconet *pn)
 		pn->first_pkt_time = clkn;
 
 	// Set afh channel map
-	pn->afh_map[pkt->channel/8] |= 0x1 << (pkt->channel % 8);
+	btbb_piconet_set_channel_seen(pn, pkt->channel);
 
 	if (pn->packets_observed < MAX_PATTERN_LENGTH) {
 		pn->pattern_indices[pn->packets_observed] = clkn - pn->first_pkt_time;
@@ -651,10 +713,10 @@ int btbb_uap_from_header(btbb_packet *pkt, btbb_piconet *pn)
 	if (remaining == 1) {
 		pn->clk_offset = (first_clock - (pn->first_pkt_time & 0x3f)) & 0x3f;
 		if (!btbb_piconet_get_flag(pn, BTBB_UAP_VALID))
-			printf("We have a winner! UAP = 0x%x found after %d total packets.\n",
+			printf("UAP = 0x%x found after %d total packets.\n",
 				pn->clock6_candidates[first_clock], pn->total_packets_observed);
 		else
-			printf("We have a winner! CLK6 = 0x%x found after %d total packets.\n",
+			printf("CLK6 = 0x%x found after %d total packets.\n",
 				pn->clk_offset, pn->total_packets_observed);
 		pn->UAP = pn->clock6_candidates[first_clock];
 		btbb_piconet_set_flag(pn, BTBB_CLK6_VALID, 1);
@@ -670,40 +732,44 @@ int btbb_uap_from_header(btbb_packet *pkt, btbb_piconet *pn)
 	return 0;
 }
 
-/* add a packet to the queue */
-static void enqueue(btbb_packet *pkt, btbb_piconet *pn)
-{
-	pkt_queue *head;
-	//pkt_queue item;
-
-	btbb_packet_ref(pkt);
-	pkt_queue item = {pkt, NULL};
-	head = pn->queue;
-	
-	if (head == NULL) {
-		pn->queue = &item;
-	} else {
-		for(; head->next != NULL; head = head->next)
-		  ;
-		head->next = &item;
-	}
-}
-
-/* pull the first packet from the queue (FIFO) */
-static btbb_packet *dequeue(btbb_piconet *pn)
-{
-	btbb_packet *pkt;
-
-	if (pn->queue == NULL) {
-		pkt = NULL;
-	} else {
-		pkt = pn->queue->pkt;
-		pn->queue = pn->queue->next;
-		btbb_packet_unref(pkt);
-	}
-
-	return pkt;
-}
+/* FIXME: comment out enqueue and dequeue because they are
+ * never used.  Try to find out what tey were meant to be
+ * used for before the next release.
+ */
+///* add a packet to the queue */
+//static void enqueue(btbb_packet *pkt, btbb_piconet *pn)
+//{
+//	pkt_queue *head;
+//	//pkt_queue item;
+//
+//	btbb_packet_ref(pkt);
+//	pkt_queue item = {pkt, NULL};
+//	head = pn->queue;
+//	
+//	if (head == NULL) {
+//		pn->queue = &item;
+//	} else {
+//		for(; head->next != NULL; head = head->next)
+//		  ;
+//		head->next = &item;
+//	}
+//}
+//
+///* pull the first packet from the queue (FIFO) */
+//static btbb_packet *dequeue(btbb_piconet *pn)
+//{
+//	btbb_packet *pkt;
+//
+//	if (pn->queue == NULL) {
+//		pkt = NULL;
+//	} else {
+//		pkt = pn->queue->pkt;
+//		pn->queue = pn->queue->next;
+//		btbb_packet_unref(pkt);
+//	}
+//
+//	return pkt;
+//}
 
 /* decode the whole packet */
 int btbb_decode(btbb_packet* pkt, btbb_piconet *pn)
@@ -774,10 +840,15 @@ void btbb_print_afh_map(btbb_piconet *pn) {
 	uint8_t *afh_map;
 	afh_map = pn->afh_map;
 
-	/* Printed ch78 -> ch0 */
-	printf("\tAFH Map=0x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
-		   afh_map[9], afh_map[8], afh_map[7], afh_map[6], afh_map[5],
-		   afh_map[4], afh_map[3], afh_map[2], afh_map[1], afh_map[0]);
+	/* Print like hcitool does */
+	printf("AFH map: 0x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
+	       afh_map[0], afh_map[1], afh_map[2], afh_map[3], afh_map[4],
+	       afh_map[5], afh_map[6], afh_map[7], afh_map[8], afh_map[9]);
+
+	// /* Printed ch78 -> ch0 */
+	// printf("\tAFH Map=0x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
+	//        afh_map[9], afh_map[8], afh_map[7], afh_map[6], afh_map[5],
+	//        afh_map[4], afh_map[3], afh_map[2], afh_map[1], afh_map[0]);
 }
 
 /* Container for survey piconets */
@@ -839,6 +910,10 @@ int btbb_process_packet(btbb_packet *pkt, btbb_piconet *pn) {
 			btbb_uap_from_header(pkt, pn);
 		return 0;
 	}
+	
+	if(pn)
+		btbb_piconet_set_channel_seen(pn, pkt->channel);
+
 	/* If piconet structure is given, a LAP is given, and packet
 	 * header is readable, do further analysis. If UAP has not yet
 	 * been determined, attempt to calculate it from headers. Once
