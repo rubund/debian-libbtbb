@@ -1,18 +1,2 @@
 Description: Fixes erroneous pkg-config file
 Author: Ruben Undheim <ruben.undheim@gmail.com>
-Index: libbtbb/lib/libbtbb.pc.in
-===================================================================
---- libbtbb.orig/lib/libbtbb.pc.in	2015-02-14 09:21:54.419894940 +0100
-+++ libbtbb/lib/libbtbb.pc.in	2015-02-14 09:29:07.595880176 +0100
-@@ -1,7 +1,7 @@
--prefix=@prefix@
--exec_prefix=@exec_prefix@
--libdir=@libdir@
--includedir=@includedir@
-+prefix=@CMAKE_INSTALL_PREFIX@
-+exec_prefix=@CMAKE_INSTALL_PREFIX@/bin
-+libdir=@CMAKE_INSTALL_PREFIX@/lib
-+includedir=@CMAKE_INSTALL_PREFIX@/include
- 
- Name: Bluetooth Baseband Library
- Description: C Utility Library
