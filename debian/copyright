@@ -111,7 +111,7 @@ Copyright: 2005,2006 Free Software Foundation, Inc
 License: GPL-2+
 
 Files: lib/src/uthash.h
-Copyright: 2003-2013 Troy D. Hanson
+Copyright: 2003-2014 Troy D. Hanson
 License: uthash-license
 
 Files: debian/*

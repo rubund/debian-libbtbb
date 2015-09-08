@@ -9,6 +9,8 @@ libbtbb (2015.09.R2-1) unstable; urgency=low
     - Changed the dependency for python-libbtbb-pcapdump
       from (= ${binary:Version}) to (>= ${source:Version})
       to avoid lintian.
+  * debian/copyright:
+    - Fixes related to new upstream release
 
  -- Ruben Undheim <ruben.undheim@gmail.com>  Mon, 07 Sep 2015 23:57:45 +0200
 
