@@ -55,6 +55,7 @@ libbtbb.so.0 libbtbb0 #MINVER#
  btbb_pcapng_record_btclock@Base 2014.11.26+gitf83b85c
  btbb_piconet_get_afh_map@Base 2014.11.26+gitf83b85c
  btbb_piconet_get_bdaddr@Base 2014.11.26+gitf83b85c
+ btbb_piconet_get_channel_seen@Base 2015.09.R2
  btbb_piconet_get_clk_offset@Base 2014.11.26+gitf83b85c
  btbb_piconet_get_flag@Base 2014.11.26+gitf83b85c
  btbb_piconet_get_lap@Base 2014.11.26+gitf83b85c
@@ -76,6 +77,7 @@ libbtbb.so.0 libbtbb0 #MINVER#
  btbb_version@Base 2014.11.26+gitf83b85c
  btbb_winnow@Base 2014.11.26+gitf83b85c
  clock_from_fhs@Base 2014.11.26+gitf83b85c
+ count_bits@Base 2015.09.R2
  crc_check@Base 2014.11.26+gitf83b85c
  fast_perm@Base 2014.11.26+gitf83b85c
  fhs@Base 2014.11.26+gitf83b85c

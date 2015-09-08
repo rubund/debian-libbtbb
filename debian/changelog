@@ -11,6 +11,8 @@ libbtbb (2015.09.R2-1) unstable; urgency=low
       to avoid lintian.
   * debian/copyright:
     - Fixes related to new upstream release
+  * debian/libbtbb0.symbols
+    - Added new symbols
 
  -- Ruben Undheim <ruben.undheim@gmail.com>  Mon, 07 Sep 2015 23:57:45 +0200
 
