@@ -40,8 +40,6 @@ Files: wireshark/plugins/btbredr/CMakeLists.txt
        wireshark/plugins/btsm/Makefile.common
        wireshark/plugins/btsm/Makefile.am
        wireshark/plugins/btbb/CMakeLists.txt
-       wireshark/plugins/btbb/Makefile.common
-       wireshark/plugins/btbb/Makefile.am
 Copyright: 1998 Gerald Combs
 License: GPL-2+
 
