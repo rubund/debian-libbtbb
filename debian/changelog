@@ -1,3 +1,9 @@
+libbtbb (2015.10.R1-1) UNRELEASED; urgency=low
+
+  * New upstream release
+
+ -- Ruben Undheim <ruben.undheim@gmail.com>  Sun, 18 Oct 2015 22:35:33 +0200
+
 libbtbb (2015.09.R2-1) unstable; urgency=low
 
   * New upstream release
