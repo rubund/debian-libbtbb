@@ -72,9 +72,7 @@ libbtbb.so.0 libbtbb0 #MINVER#
  btbb_print_afh_map@Base 2014.11.26+gitf83b85c
  btbb_print_packet@Base 2014.11.26+gitf83b85c
  btbb_process_packet@Base 2014.11.26+gitf83b85c
- btbb_release@Base 2014.11.26+gitf83b85c
  btbb_uap_from_header@Base 2014.11.26+gitf83b85c
- btbb_version@Base 2014.11.26+gitf83b85c
  btbb_winnow@Base 2014.11.26+gitf83b85c
  clock_from_fhs@Base 2014.11.26+gitf83b85c
  count_bits@Base 2015.09.R2
@@ -125,3 +123,7 @@ libbtbb.so.0 libbtbb0 #MINVER#
  try_hop@Base 2014.11.26+gitf83b85c
  tun_format@Base 2014.11.26+gitf83b85c
  uap_from_fhs@Base 2014.11.26+gitf83b85c
+ bt_compidtostr@Base 2015.10.R1+20161027git1eecca5
+ btbb_pcap_dump@Base 2015.10.R1+20161027git1eecca5
+ btbb_pcap_open@Base 2015.10.R1+20161027git1eecca5
+ btbb_piconet_clear_channel_seen@Base 2015.10.R1+20161027git1eecca5
