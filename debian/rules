@@ -23,5 +23,3 @@ override_dh_auto_configure:
 override_dh_auto_install:
 	dh_auto_install
 
-override_dh_strip:
-	dh_strip -plibbtbb0 --keep-debug --dbg-package=libbtbb0-dbg

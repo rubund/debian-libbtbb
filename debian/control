@@ -11,7 +11,7 @@ Vcs-Git: git://github.com/rubund/debian-libbtbb.git
 Vcs-Browser: https://github.com/rubund/debian-libbtbb/tree/master
 Homepage: http://libbtbb.sourceforge.net/
 
-Package: libbtbb0
+Package: libbtbb1
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends}
@@ -25,7 +25,7 @@ Description: Bluetooth baseband decoding library
 Package: libbtbb-dev
 Architecture: any
 Section: libdevel
-Depends: libbtbb0 (= ${binary:Version}),
+Depends: libbtbb1 (= ${binary:Version}),
          libpcap-dev,
          ${misc:Depends}
 Multi-Arch: same
@@ -36,25 +36,10 @@ Description: Bluetooth baseband decoding library - development files
  .
  This package provides the development files for using the btbb library.
 
-Package: libbtbb0-dbg
-Architecture: any
-Section: debug
-Priority: extra
-Depends: libbtbb0 (= ${binary:Version}),
-         ${misc:Depends}
-Multi-Arch: same
-Description: Bluetooth baseband decoding library - debugging symbols
- This is the Bluetooth baseband decoding library, forked from the GR-Bluetooth
- project. It can be used to extract Bluetooth packet and piconet information
- from Ubertooth devices as well as GR-Bluetooth/USRP.
- .
- This package contains the debugging files used to investigate problems with
- the btbb library.
-
 Package: python-libbtbb-pcapdump
 Architecture: all
 Section: python
-Depends: libbtbb0 (>= ${source:Version}),
+Depends: libbtbb1 (>= ${source:Version}),
          python,
          ${misc:Depends}
 Description: pcapdump is a Python module for pcap delivered by libbtbb

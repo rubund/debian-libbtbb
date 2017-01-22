@@ -1,0 +1,13 @@
+Index: libbtbb/lib/src/CMakeLists.txt
+===================================================================
+--- libbtbb.orig/lib/src/CMakeLists.txt	2017-01-22 11:28:23.294593046 +0100
++++ libbtbb/lib/src/CMakeLists.txt	2017-01-22 11:40:18.586447680 +0100
+@@ -55,7 +55,7 @@
+ 	# Shared library
+ 	message(STATUS "Building shared library")
+ 	add_library(btbb SHARED ${c_sources})
+-	set_target_properties(btbb PROPERTIES VERSION ${MAJOR_VERSION}.${MINOR_VERSION} SOVERSION 0)
++	set_target_properties(btbb PROPERTIES VERSION ${MAJOR_VERSION}.${MINOR_VERSION} SOVERSION 1)
+ 	set_target_properties(btbb PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+ endif( ${BUILD_SHARED_LIB} )
+ 
