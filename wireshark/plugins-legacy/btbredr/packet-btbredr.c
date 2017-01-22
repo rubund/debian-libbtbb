@@ -176,7 +176,7 @@ dissect_payload_header1(proto_tree *tree, tvbuff_t *tvb, int offset)
 	proto_item *hdr_item;
 	proto_tree *hdr_tree;
 
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	hdr_item = proto_tree_add_item(tree, hf_btbredr_pldhdr, tvb, offset, 1, ENC_NA);
 	hdr_tree = proto_item_add_subtree(hdr_item, ett_btbredr_pldhdr);
@@ -197,7 +197,7 @@ dissect_fhs(proto_tree *tree, tvbuff_t *tvb, packet_info *pinfo, int offset)
     const gchar *description;
 	guint8 psmode;
 
-	if(tvb_reported_length_remaining(tvb, offset) != 20) {
+	if(tvb_length_remaining(tvb, offset) != 20) {
 		col_add_str(pinfo->cinfo, COL_INFO, "Encrypted or malformed payload data");
 		return;
 	}
@@ -260,7 +260,7 @@ dissect_dm1(proto_tree *tree, tvbuff_t *tvb, packet_info *pinfo, int offset)
 	 */
 	guint16 fake_acl_data;
 
-	if(tvb_reported_length_remaining(tvb, offset) < 3) {
+	if(tvb_length_remaining(tvb, offset) < 3) {
 		col_add_str(pinfo->cinfo, COL_INFO, "Encrypted or malformed payload data");
 		return;
 	}
@@ -272,7 +272,7 @@ dissect_dm1(proto_tree *tree, tvbuff_t *tvb, packet_info *pinfo, int offset)
 	llid = tvb_get_guint8(tvb, offset) & 0x3;
 	offset += 1;
 
-	if(tvb_reported_length_remaining(tvb, offset) < len + 2) {
+	if(tvb_length_remaining(tvb, offset) < len + 2) {
 		col_add_str(pinfo->cinfo, COL_INFO, "Encrypted or malformed payload data");
 		return;
 	}
@@ -286,8 +286,9 @@ dissect_dm1(proto_tree *tree, tvbuff_t *tvb, packet_info *pinfo, int offset)
 		l2len = tvb_get_letohs(tvb, offset);
 		if (l2len + 4 == len) {
 			/* unfragmented */
+			pinfo->private_data = &fake_acl_data;
 			pld_tvb = tvb_new_subset(tvb, offset, len, len);
-			call_dissector_with_data(btl2cap_handle, pld_tvb, pinfo, dm1_tree, &fake_acl_data);
+			call_dissector(btl2cap_handle, pld_tvb, pinfo, dm1_tree);
 		} else {
 			/* start of fragment */
 			proto_tree_add_item(dm1_tree, hf_btbredr_pldbody, tvb, offset, len, ENC_NA);
@@ -313,7 +314,7 @@ dissect_btbredr(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data 
 	const gchar *info;
 
 	/* sanity check: length */
-	if (tvb_reported_length(tvb) > 0 && tvb_reported_length(tvb) < 9)
+	if (tvb_length(tvb) > 0 && tvb_length(tvb) < 9)
 		/* bad length: look for a different dissector */
 		return 0;
 
@@ -322,7 +323,7 @@ dissect_btbredr(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data 
 	/* make entries in protocol column and info column on summary display */
 	col_set_str(pinfo->cinfo, COL_PROTOCOL, "Bluetooth");
 
-	if (tvb_reported_length(tvb) == 0) {
+	if (tvb_length(tvb) == 0) {
 		info = "ID";
 	} else {
 		type = (tvb_get_guint8(tvb, 16) >> 3) & 0x0f;
@@ -341,7 +342,7 @@ dissect_btbredr(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data 
 		btbredr_tree = proto_item_add_subtree(btbredr_item, ett_btbredr);
 
 		/* ID packets have no header, no payload */
-		if (tvb_reported_length(tvb) == 0)
+		if (tvb_length(tvb) == 0)
 			return 1;
 
 		/* meta data */
@@ -420,7 +421,7 @@ dissect_btbredr(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data 
 	}
 
 	/* Return the amount of data this dissector was able to dissect */
-	return tvb_reported_length(tvb);
+	return tvb_length(tvb);
 }
 
 /* register the protocol with Wireshark */
@@ -441,12 +442,12 @@ proto_register_btbredr(void)
 		},
 		{ &hf_btbredr_signal,
 			{ "Signal", "btbredr.signal",
-			FT_INT8, BASE_DEC, NULL, 0x0,
+			FT_UINT8, BASE_DEC, NULL, 0x0,
 			"Signal Power", HFILL }
 		},
 		{ &hf_btbredr_noise,
 			{ "Noise", "btbredr.noise",
-			FT_INT8, BASE_DEC, NULL, 0x0,
+			FT_UINT8, BASE_DEC, NULL, 0x0,
 			"Noise Power", HFILL }
 		},
 		{ &hf_btbredr_ac_offenses,
