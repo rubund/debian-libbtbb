@@ -1,4 +1,4 @@
-/* packet-btlmp.c
+/* packet-btbrlmp.c
  * Routines for Bluetooth LMP dissection
  * Copyright 2009, Michael Ossmann <mike@ossmann.com>
  *
@@ -124,7 +124,7 @@
 #define LMP_POWER_CONTROL_RES          32
 
 /* initialize the protocol and registered fields */
-static int proto_btlmp = -1;
+static int proto_btbrlmp = -1;
 static int hf_lmp_accscheme = -1;
 static int hf_lmp_afhchmap = -1;
 static int hf_lmp_afhclass = -1;
@@ -759,7 +759,7 @@ void
 dissect_name_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_nameoffset, tvb, offset, 1, ENC_NA);
 }
@@ -768,7 +768,7 @@ void
 dissect_name_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_nameoffset, tvb, offset, 1, ENC_NA);
 	offset += 1;
@@ -783,7 +783,7 @@ void
 dissect_accepted(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_opinre, tvb, offset, 1, ENC_NA);
 }
@@ -792,7 +792,7 @@ void
 dissect_not_accepted(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_opinre, tvb, offset, 1, ENC_NA);
 	offset += 1;
@@ -810,7 +810,7 @@ void
 dissect_clkoffset_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_clkoffset, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 }
@@ -819,7 +819,7 @@ void
 dissect_detach(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_err, tvb, offset, 1, ENC_NA);
 }
@@ -828,7 +828,7 @@ void
 dissect_in_rand(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_rand, tvb, offset, 16, ENC_NA);
 }
@@ -837,7 +837,7 @@ void
 dissect_comb_key(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_rand, tvb, offset, 16, ENC_NA);
 }
@@ -846,7 +846,7 @@ void
 dissect_unit_key(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_key, tvb, offset, 16, ENC_NA);
 }
@@ -855,7 +855,7 @@ void
 dissect_au_rand(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_rand, tvb, offset, 16, ENC_NA);
 }
@@ -864,7 +864,7 @@ void
 dissect_sres(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 5);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 4);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 4);
 
 	proto_tree_add_item(tree, hf_lmp_authres, tvb, offset, 4, ENC_NA);
 }
@@ -873,7 +873,7 @@ void
 dissect_temp_rand(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_rand, tvb, offset, 16, ENC_NA);
 }
@@ -882,7 +882,7 @@ void
 dissect_temp_key(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_key, tvb, offset, 16, ENC_NA);
 }
@@ -891,7 +891,7 @@ void
 dissect_encryption_mode_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_cryptmode, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -900,7 +900,7 @@ void
 dissect_encryption_key_size_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_keysz, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -909,7 +909,7 @@ void
 dissect_start_encryption_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_rand, tvb, offset, 16, ENC_NA);
 }
@@ -924,7 +924,7 @@ void
 dissect_switch_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 5);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 4);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 4);
 
 	proto_tree_add_item(tree, hf_lmp_swinst, tvb, offset, 4, ENC_LITTLE_ENDIAN);
 }
@@ -933,7 +933,7 @@ void
 dissect_hold(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 7);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 6);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 6);
 
 	proto_tree_add_item(tree, hf_lmp_htime, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 	offset += 2;
@@ -945,7 +945,7 @@ void
 dissect_hold_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 7);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 6);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 6);
 
 	proto_tree_add_item(tree, hf_lmp_htime, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 	offset += 2;
@@ -957,7 +957,7 @@ void
 dissect_sniff_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 10);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 9);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 9);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -985,7 +985,7 @@ void
 dissect_park_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -1036,7 +1036,7 @@ dissect_set_broadcast_scan_window(proto_tree *tree, tvbuff_t *tvb, int offset, i
 {
 	int db_present;
 
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -1047,13 +1047,13 @@ dissect_set_broadcast_scan_window(proto_tree *tree, tvbuff_t *tvb, int offset, i
 
 	if (db_present) {
 		DISSECTOR_ASSERT(len == 6);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 4);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 4);
 
 		proto_tree_add_item(tree, hf_lmp_db, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 		offset += 2;
 	} else {
 		DISSECTOR_ASSERT(len == 4);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 	}
 
 	proto_tree_add_item(tree, hf_lmp_bsw, tvb, offset, 2, ENC_LITTLE_ENDIAN);
@@ -1064,7 +1064,7 @@ dissect_modify_beacon(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	int db_present;
 
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -1075,13 +1075,13 @@ dissect_modify_beacon(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 
 	if (db_present) {
 		DISSECTOR_ASSERT(len == 13);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 11);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 11);
 
 		proto_tree_add_item(tree, hf_lmp_db, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 		offset += 2;
 	} else {
 		DISSECTOR_ASSERT(len == 11);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 9);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 9);
 	}
 
 	proto_tree_add_item(tree, hf_lmp_tb, tvb, offset, 2, ENC_LITTLE_ENDIAN);
@@ -1115,7 +1115,7 @@ dissect_unpark_bd_addr_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 	int db_present;
 	proto_item *item;
 
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -1126,13 +1126,13 @@ dissect_unpark_bd_addr_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 
 	if (db_present) {
 		DISSECTOR_ASSERT(len == 17);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 15);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 15);
 
 		proto_tree_add_item(tree, hf_lmp_db, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 		offset += 2;
 	} else {
 		DISSECTOR_ASSERT(len == 15);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 13);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 13);
 	}
 
 	proto_tree_add_item(tree, hf_lmp_ltaddr1, tvb, offset, 1, ENC_LITTLE_ENDIAN);
@@ -1151,7 +1151,7 @@ dissect_unpark_pm_addr_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	int db_present;
 
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -1162,13 +1162,13 @@ dissect_unpark_pm_addr_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 
 	if (db_present) {
 		DISSECTOR_ASSERT(len == 15);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 13);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 13);
 
 		proto_tree_add_item(tree, hf_lmp_db, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 		offset += 2;
 	} else {
 		DISSECTOR_ASSERT(len == 13);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 11);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 11);
 	}
 
 	proto_tree_add_item(tree, hf_lmp_ltaddr1, tvb, offset, 1, ENC_LITTLE_ENDIAN);
@@ -1248,7 +1248,7 @@ dissect_preferred_rate(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 	proto_tree *rate_tree;
 
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	rate_item = proto_tree_add_item(tree, hf_lmp_rate, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	rate_tree = proto_item_add_subtree(rate_item, ett_lmp_rate);
@@ -1263,7 +1263,7 @@ void
 dissect_version_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 6);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 5);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 5);
 
 	proto_tree_add_item(tree, hf_lmp_versnr, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1278,7 +1278,7 @@ void
 dissect_version_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 6);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 5);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 5);
 
 	proto_tree_add_item(tree, hf_lmp_versnr, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1293,7 +1293,7 @@ void
 dissect_features_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 9);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 8);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 8);
 
 	proto_tree_add_item(tree, hf_lmp_features, tvb, offset, 8, ENC_NA);
 }
@@ -1302,7 +1302,7 @@ void
 dissect_features_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 9);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 8);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 8);
 
 	proto_tree_add_item(tree, hf_lmp_features, tvb, offset, 8, ENC_NA);
 }
@@ -1311,7 +1311,7 @@ void
 dissect_quality_of_service(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 3);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 3);
 
 	proto_tree_add_item(tree, hf_lmp_pollintvl, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 	offset += 2;
@@ -1323,7 +1323,7 @@ void
 dissect_quality_of_service_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 3);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 3);
 
 	proto_tree_add_item(tree, hf_lmp_pollintvl, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 	offset += 2;
@@ -1335,7 +1335,7 @@ void
 dissect_sco_link_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 7);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 6);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 6);
 
 	proto_tree_add_item(tree, hf_lmp_scohdl, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1360,7 +1360,7 @@ void
 dissect_remove_sco_link_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_scohdl, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1372,7 +1372,7 @@ void
 dissect_max_slot(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_maxslots, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -1381,7 +1381,7 @@ void
 dissect_max_slot_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_maxslots, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -1396,7 +1396,7 @@ void
 dissect_timing_accuracy_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_drift, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1426,7 +1426,7 @@ void
 dissect_slot_offset(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 9);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 8);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 8);
 
 	proto_tree_add_item(tree, hf_lmp_slotoffset, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 	offset += 2;
@@ -1438,7 +1438,7 @@ void
 dissect_page_mode_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_pagesch, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1450,7 +1450,7 @@ void
 dissect_page_scan_mode_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_pagesch, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1462,7 +1462,7 @@ void
 dissect_supervision_timeout(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_suptimeout, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 }
@@ -1477,7 +1477,7 @@ void
 dissect_test_control(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 10);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 9);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 9);
 
 	/* FIXME these fields should all be XORed with 0x55. . . */
 
@@ -1515,7 +1515,7 @@ void
 dissect_encryption_key_size_mask_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_ksmask, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 }
@@ -1524,7 +1524,7 @@ void
 dissect_set_afh(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 16);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 15);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 15);
 
 	proto_tree_add_item(tree, hf_lmp_afhinst, tvb, offset, 4, ENC_LITTLE_ENDIAN);
 	offset += 4;
@@ -1539,7 +1539,7 @@ void
 dissect_encapsulated_header(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 3);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 3);
 
 	proto_tree_add_item(tree, hf_lmp_encmaj, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1554,7 +1554,7 @@ void
 dissect_encapsulated_payload(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_encdata, tvb, offset, 16, ENC_NA);
 }
@@ -1563,7 +1563,7 @@ void
 dissect_simple_pairing_confirm(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_commit, tvb, offset, 16, ENC_NA);
 }
@@ -1572,7 +1572,7 @@ void
 dissect_simple_pairing_number(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_nonce, tvb, offset, 16, ENC_NA);
 }
@@ -1581,7 +1581,7 @@ void
 dissect_dhkey_check(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_confirm, tvb, offset, 16, ENC_NA);
 }
@@ -1592,7 +1592,7 @@ void
 dissect_accepted_ext(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_opinre, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1604,7 +1604,7 @@ void
 dissect_not_accepted_ext(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_opinre, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1619,7 +1619,7 @@ void
 dissect_features_req_ext(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 12);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 10);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 10);
 
 	proto_tree_add_item(tree, hf_lmp_fpage, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1638,7 +1638,7 @@ void
 dissect_features_res_ext(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 12);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 10);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 10);
 
 	proto_tree_add_item(tree, hf_lmp_fpage, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1657,7 +1657,7 @@ void
 dissect_packet_type_table_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_pkttypetbl, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -1666,7 +1666,7 @@ void
 dissect_esco_link_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 16);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 14);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 14);
 
 	proto_tree_add_item(tree, hf_lmp_escohdl, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1709,7 +1709,7 @@ void
 dissect_remove_esco_link_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_escohdl, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1721,7 +1721,7 @@ void
 dissect_channel_classification_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 7);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 5);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 5);
 
 	proto_tree_add_item(tree, hf_lmp_afhrptmode, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1736,7 +1736,7 @@ void
 dissect_channel_classification(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 12);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 10);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 10);
 
 	proto_tree_add_item(tree, hf_lmp_afhclass, tvb, offset, 10, ENC_NA);
 }
@@ -1745,7 +1745,7 @@ void
 dissect_sniff_subrating_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 9);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 7);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 7);
 
 	proto_tree_add_item(tree, hf_lmp_maxss, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1760,7 +1760,7 @@ void
 dissect_sniff_subrating_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 9);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 7);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 7);
 
 	proto_tree_add_item(tree, hf_lmp_maxss, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1787,7 +1787,7 @@ void
 dissect_io_capability_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 5);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 3);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 3);
 
 	proto_tree_add_item(tree, hf_lmp_iocaps, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1802,7 +1802,7 @@ void
 dissect_io_capability_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 5);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 3);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 3);
 
 	proto_tree_add_item(tree, hf_lmp_iocaps, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1835,7 +1835,7 @@ void
 dissect_keypress_notification(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_nottype, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -1844,7 +1844,7 @@ void
 dissect_power_control_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_pwradjreq, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -1856,7 +1856,7 @@ dissect_power_control_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 	proto_tree *pa_tree;
 
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	pa_item = proto_tree_add_item(tree, hf_lmp_pwradjres, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	pa_tree = proto_item_add_subtree(pa_item, ett_lmp_pwradjres);
@@ -1868,7 +1868,7 @@ dissect_power_control_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 
 /* Link Manager Protocol */
 static void
-dissect_btlmp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
+dissect_btbrlmp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
 	proto_item *lmp_item;
 	proto_tree *lmp_tree;
@@ -1878,7 +1878,7 @@ dissect_btlmp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 	int eop;    /* extended opcode */
 
 	offset = 0;
-	len = tvb_reported_length(tvb);
+	len = tvb_length(tvb);
 
 	DISSECTOR_ASSERT(len >= 1);
 
@@ -1906,7 +1906,7 @@ dissect_btlmp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 	if (!tree)
 		return;
 
-	lmp_item = proto_tree_add_item(tree, proto_btlmp, tvb, offset, -1, ENC_NA);
+	lmp_item = proto_tree_add_item(tree, proto_btbrlmp, tvb, offset, -1, ENC_NA);
 	lmp_tree = proto_item_add_subtree(lmp_item, ett_lmp);
 
 	proto_tree_add_item(lmp_tree, hf_lmp_tid, tvb, offset, 1, ENC_LITTLE_ENDIAN);
@@ -2190,657 +2190,657 @@ dissect_btlmp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 
 /* register the protocol with Wireshark */
 void
-proto_register_btlmp(void)
+proto_register_btbrlmp(void)
 {
 
 	/* list of fields */
 	static hf_register_info hf[] = {
 		{ &hf_lmp_accscheme,
-			{ "Access Scheme", "btlmp.accscheme",
+			{ "Access Scheme", "btbrlmp.accscheme",
 			FT_UINT8, BASE_DEC, VALS(access_scheme), 0xf0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_afhchmap,
-			{ "AFH Channel Map", "btlmp.afhchmap",
+			{ "AFH Channel Map", "btbrlmp.afhchmap",
 			/* could break out individual channels but long */
 			FT_BYTES, BASE_NONE, NULL, 0x0,
 			"Adaptive Frequency Hopping Channel Map", HFILL }
 		},
 		{ &hf_lmp_afhclass,
-			{ "AFH Channel Classification", "btlmp.afhclass",
+			{ "AFH Channel Classification", "btbrlmp.afhclass",
 			/* could break out individual channels but long */
 			FT_BYTES, BASE_NONE, NULL, 0x0,
 			"Adaptive Frequency Hopping Channel Classification", HFILL }
 		},
 		{ &hf_lmp_afhinst,
-			{ "AFH Instant", "btlmp.afhinst",
+			{ "AFH Instant", "btbrlmp.afhinst",
 			FT_UINT32, BASE_HEX, NULL, 0x0,
 			"Adaptive Frequency Hopping Instant (slot)", HFILL }
 		},
 		{ &hf_lmp_afhmaxintvl,
-			{ "AFH Max Interval", "btlmp.maxintvl",
+			{ "AFH Max Interval", "btbrlmp.maxintvl",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Adaptive Maximum Interval in slots", HFILL }
 		},
 		{ &hf_lmp_afhminintvl,
-			{ "AFH Min Interval", "btlmp.minintvl",
+			{ "AFH Min Interval", "btbrlmp.minintvl",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Adaptive Minimum Interval in slots", HFILL }
 		},
 		{ &hf_lmp_afhmode,
-			{ "AFH Mode", "btlmp.afhmode",
+			{ "AFH Mode", "btbrlmp.afhmode",
 			FT_UINT8, BASE_DEC, VALS(afh_mode), 0x0,
 			"Adaptive Frequency Hopping Mode", HFILL }
 		},
 		{ &hf_lmp_afhrptmode,
-			{ "AFH Reporting Mode", "btlmp.afhrptmode",
+			{ "AFH Reporting Mode", "btbrlmp.afhrptmode",
 			FT_UINT8, BASE_DEC, VALS(afh_reporting_mode), 0x0,
 			"Adaptive Frequency Hopping Reporting Mode", HFILL }
 		},
 		{ &hf_lmp_airmode,
-			{ "Air Mode", "btlmp.airmode",
+			{ "Air Mode", "btbrlmp.airmode",
 			FT_UINT8, BASE_HEX, VALS(air_mode), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_araddr,
-			{ "AR_ADDR", "btlmp.araddr",
+			{ "AR_ADDR", "btbrlmp.araddr",
 			FT_UINT8, BASE_HEX, NULL, 0xfe,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_authreqs,
-			{ "Authentication Requirements", "btlmp.authreqs",
+			{ "Authentication Requirements", "btbrlmp.authreqs",
 			FT_UINT8, BASE_HEX, VALS(auth_requirements), 0xf0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_authres,
-			{ "Authentication Response", "btlmp.authres",
+			{ "Authentication Response", "btbrlmp.authres",
 			FT_BYTES, BASE_NONE, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_bdaddr,
-			{ "BD_ADDR", "btlmp.bdaddr",
+			{ "BD_ADDR", "btbrlmp.bdaddr",
 			FT_UINT64, BASE_HEX, NULL, 0x0000ffffffffffff,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_bdaddr1,
-			{ "BD_ADDR 1", "btlmp.bdaddr",
+			{ "BD_ADDR 1", "btbrlmp.bdaddr",
 			FT_UINT64, BASE_HEX, NULL, 0x0000ffffffffffff,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_bdaddr2,
-			{ "BD_ADDR2", "btlmp.bdaddr",
+			{ "BD_ADDR2", "btbrlmp.bdaddr",
 			FT_UINT64, BASE_HEX, NULL, 0x0000ffffffffffff,
 			"BD_ADDR 2", HFILL }
 		},
 		{ &hf_lmp_bsw,
-			{ "Broadcast Scan Window", "btlmp.bsw",
+			{ "Broadcast Scan Window", "btbrlmp.bsw",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Broadcast Scan Window in slots", HFILL }
 		},
 		{ &hf_lmp_clkoffset,
-			{ "Clock Offset", "btlmp.clkoffset",
+			{ "Clock Offset", "btbrlmp.clkoffset",
 			FT_UINT16, BASE_DEC, NULL, 0x0,
 			"Clock Offset in units of 1.25 ms", HFILL }
 		},
 		{ &hf_lmp_commit,
-			{ "Commitment Value", "btlmp.commit",
+			{ "Commitment Value", "btbrlmp.commit",
 			FT_BYTES, BASE_NONE, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_confirm,
-			{ "Confirmation Value", "btlmp.confirm",
+			{ "Confirmation Value", "btbrlmp.confirm",
 			FT_BYTES, BASE_NONE, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_compid,
-			{ "Company ID", "btlmp.compid",
+			{ "Company ID", "btbrlmp.compid",
 			FT_UINT16, BASE_DEC, VALS(compid), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_cryptmode,
-			{ "Encryption Mode", "btlmp.cryptmode",
+			{ "Encryption Mode", "btbrlmp.cryptmode",
 			FT_UINT8, BASE_DEC, VALS(encryption_mode), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_daccess,
-			{ "Daccess", "btlmp.daccess",
+			{ "Daccess", "btbrlmp.daccess",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			"Daccess in slots", HFILL }
 		},
 		{ &hf_lmp_db,
-			{ "Db", "btlmp.db",
+			{ "Db", "btbrlmp.db",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Db in slots", HFILL }
 		},
 		{ &hf_lmp_dbsleep,
-			{ "Dbsleep", "btlmp.dbsleep",
+			{ "Dbsleep", "btbrlmp.dbsleep",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_deltab,
-			{ "Deltab", "btlmp.deltab",
+			{ "Deltab", "btbrlmp.deltab",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			"Deltab in slots", HFILL }
 		},
 		{ &hf_lmp_desco,
-			{ "Desco", "btlmp.desco",
+			{ "Desco", "btbrlmp.desco",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			"Desco in slots", HFILL }
 		},
 		{ &hf_lmp_drift,
-			{ "Drift", "btlmp.drift",
+			{ "Drift", "btbrlmp.drift",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			"Drift in ppm", HFILL }
 		},
 		{ &hf_lmp_dsco,
-			{ "Dsco", "btlmp.dsco",
+			{ "Dsco", "btbrlmp.dsco",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			"Dsco in slots", HFILL }
 		},
 		{ &hf_lmp_dsniff,
-			{ "Dsniff", "btlmp.dsniff",
+			{ "Dsniff", "btbrlmp.dsniff",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Dsniff in slots", HFILL }
 		},
 		{ &hf_lmp_encdata,
-			{ "Encapsulated Data", "btlmp.encdata",
+			{ "Encapsulated Data", "btbrlmp.encdata",
 			FT_BYTES, BASE_NONE, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_enclen,
-			{ "Encapsulated Length", "btlmp.enclen",
+			{ "Encapsulated Length", "btbrlmp.enclen",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_encmaj,
-			{ "Encapsulated Major Type", "btlmp.encmaj",
+			{ "Encapsulated Major Type", "btbrlmp.encmaj",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_encmin,
-			{ "Encapsulated Minor Type", "btlmp.encmin",
+			{ "Encapsulated Minor Type", "btbrlmp.encmin",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_eop,
-			{ "Extended Opcode", "btlmp.eop",
+			{ "Extended Opcode", "btbrlmp.eop",
 			FT_UINT8, BASE_DEC, VALS(ext_opcode), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_eopinre,
-			{ "In Response To", "btlmp.eopinre",
+			{ "In Response To", "btbrlmp.eopinre",
 			FT_UINT8, BASE_DEC, VALS(ext_opcode), 0x0,
 			"Extended Opcode this is in response to", HFILL }
 		},
 		{ &hf_lmp_escolenms,
-			{ "Packet Length M -> S", "btlmp.escolenms",
+			{ "Packet Length M -> S", "btbrlmp.escolenms",
 			FT_UINT16, BASE_DEC, NULL, 0x0,
 			"Packet Length in bytes Master to Slave", HFILL }
 		},
 		{ &hf_lmp_escolensm,
-			{ "Packet Length S -> M", "btlmp.escolensm",
+			{ "Packet Length S -> M", "btbrlmp.escolensm",
 			FT_UINT16, BASE_DEC, NULL, 0x0,
 			"Packet Length in bytes Slave to Master", HFILL }
 		},
 		{ &hf_lmp_escotypems,
-			{ "eSCO Packet Type M -> S", "btlmp.escotypems",
+			{ "eSCO Packet Type M -> S", "btbrlmp.escotypems",
 			FT_UINT8, BASE_HEX, VALS(esco_packet_type), 0x0,
 			"eSCO Packet Type Master to Slave", HFILL }
 		},
 		{ &hf_lmp_escotypesm,
-			{ "eSCO Packet Type S -> M", "btlmp.escotypesm",
+			{ "eSCO Packet Type S -> M", "btbrlmp.escotypesm",
 			FT_UINT8, BASE_HEX, VALS(esco_packet_type), 0x0,
 			"eSCO Packet Type Slave to Master", HFILL }
 		},
 		{ &hf_lmp_err,
-			{ "Error Code", "btlmp.err",
+			{ "Error Code", "btbrlmp.err",
 			FT_UINT8, BASE_HEX, VALS(error_code), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_escohdl,
-			{ "eSCO Handle", "btlmp.escohdl",
+			{ "eSCO Handle", "btbrlmp.escohdl",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_escoltaddr,
-			{ "eSCO LT_ADDR", "btlmp.escoltaddr",
+			{ "eSCO LT_ADDR", "btbrlmp.escoltaddr",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			"eSCO Logical Transport Address", HFILL }
 		},
 		{ &hf_lmp_features,
-			{ "Features", "btlmp.features",
+			{ "Features", "btbrlmp.features",
 			/* could break out individual features but long */
 			FT_BYTES, BASE_NONE, NULL, 0x0,
 			"Feature Mask", HFILL }
 		},
 		{ &hf_lmp_fpage,
-			{ "Features Page", "btlmp.fpage",
+			{ "Features Page", "btbrlmp.fpage",
 			FT_UINT8, BASE_DEC, VALS(features_page), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_htime,
-			{ "Hold Time", "btlmp.htime",
+			{ "Hold Time", "btbrlmp.htime",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Hold Time in slots", HFILL }
 		},
 		{ &hf_lmp_hinst,
-			{ "Hold Instant", "btlmp.hinst",
+			{ "Hold Instant", "btbrlmp.hinst",
 			FT_UINT32, BASE_HEX, NULL, 0x0,
 			"Hold Instant (slot)", HFILL }
 		},
 		{ &hf_lmp_hopmode,
-			{ "Hopping Mode", "btlmp.hopmode",
+			{ "Hopping Mode", "btbrlmp.hopmode",
 			FT_UINT8, BASE_DEC, VALS(hopping_mode), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_iocaps,
-			{ "IO Capabilities", "btlmp.iocaps",
+			{ "IO Capabilities", "btbrlmp.iocaps",
 			FT_UINT8, BASE_DEC, VALS(io_capabilities), 0x0,
 			"Input/Output Capabilities", HFILL }
 		},
 		{ &hf_lmp_jitter,
-			{ "Jitter", "btlmp.jitter",
+			{ "Jitter", "btbrlmp.jitter",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			"Jitter in microseconds", HFILL }
 		},
 		{ &hf_lmp_key,
-			{ "Key", "btlmp.key",
+			{ "Key", "btbrlmp.key",
 			FT_BYTES, BASE_NONE, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_keysz,
-			{ "Key Size", "btlmp.keysz",
+			{ "Key Size", "btbrlmp.keysz",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			"Key Size in bytes", HFILL }
 		},
 		{ &hf_lmp_ksmask,
-			{ "Key Size Mask", "btlmp.ksmask",
+			{ "Key Size Mask", "btbrlmp.ksmask",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_ltaddr1,
-			{ "LT_ADDR 1", "btlmp.ltaddr",
+			{ "LT_ADDR 1", "btbrlmp.ltaddr",
 			FT_UINT8, BASE_HEX, NULL, 0x0f,
 			"Logical Transport Address 1", HFILL }
 		},
 		{ &hf_lmp_ltaddr2,
-			{ "LT_ADDR 2", "btlmp.ltaddr",
+			{ "LT_ADDR 2", "btbrlmp.ltaddr",
 			FT_UINT8, BASE_HEX, NULL, 0xf0,
 			"Logical Transport Address 2", HFILL }
 		},
 		{ &hf_lmp_ltaddr3,
-			{ "LT_ADDR 3", "btlmp.ltaddr",
+			{ "LT_ADDR 3", "btbrlmp.ltaddr",
 			FT_UINT8, BASE_HEX, NULL, 0x0f,
 			"Logical Transport Address 3", HFILL }
 		},
 		{ &hf_lmp_ltaddr4,
-			{ "LT_ADDR 4", "btlmp.ltaddr",
+			{ "LT_ADDR 4", "btbrlmp.ltaddr",
 			FT_UINT8, BASE_HEX, NULL, 0xf0,
 			"Logical Transport Address 4", HFILL }
 		},
 		{ &hf_lmp_ltaddr5,
-			{ "LT_ADDR 5", "btlmp.ltaddr",
+			{ "LT_ADDR 5", "btbrlmp.ltaddr",
 			FT_UINT8, BASE_HEX, NULL, 0x0f,
 			"Logical Transport Address 5", HFILL }
 		},
 		{ &hf_lmp_ltaddr6,
-			{ "LT_ADDR 6", "btlmp.ltaddr",
+			{ "LT_ADDR 6", "btbrlmp.ltaddr",
 			FT_UINT8, BASE_HEX, NULL, 0xf0,
 			"Logical Transport Address 6", HFILL }
 		},
 		{ &hf_lmp_ltaddr7,
-			{ "LT_ADDR 7", "btlmp.ltaddr",
+			{ "LT_ADDR 7", "btbrlmp.ltaddr",
 			FT_UINT8, BASE_HEX, NULL, 0x0f,
 			"Logical Transport Address 7", HFILL }
 		},
 		{ &hf_lmp_maccess,
-			{ "Maccess", "btlmp.maccess",
+			{ "Maccess", "btbrlmp.maccess",
 			FT_UINT8, BASE_HEX, NULL, 0x0f,
 			"Number of access windows", HFILL }
 		},
 		{ &hf_lmp_maxslots,
-			{ "Max Slots", "btlmp.maxslots",
+			{ "Max Slots", "btbrlmp.maxslots",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_maxsp,
-			{ "Max Supported Page", "btlmp.maxsp",
+			{ "Max Supported Page", "btbrlmp.maxsp",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			"Highest extended features page with non-zero bit", HFILL }
 		},
 		{ &hf_lmp_maxss,
-			{ "Max Sniff Subrate", "btlmp.maxss",
+			{ "Max Sniff Subrate", "btbrlmp.maxss",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_minsmt,
-			{ "Min Sniff Mode Timeout", "btlmp.minsmt",
+			{ "Min Sniff Mode Timeout", "btbrlmp.minsmt",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Min Sniff Mode Timeout in slots", HFILL }
 		},
 		{ &hf_lmp_naccslots,
-			{ "Nacc-slots", "btlmp.naccslots",
+			{ "Nacc-slots", "btbrlmp.naccslots",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_namefrag,
-			{ "Name Fragment", "btlmp.namefrag",
+			{ "Name Fragment", "btbrlmp.namefrag",
 			FT_STRING, BASE_NONE, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_namelen,
-			{ "Name Length", "btlmp.namelen",
+			{ "Name Length", "btbrlmp.namelen",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			"Name Length in bytes", HFILL }
 		},
 		{ &hf_lmp_nameoffset,
-			{ "Name Offset", "btlmp.nameoffset",
+			{ "Name Offset", "btbrlmp.nameoffset",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			"Name Offset in bytes", HFILL }
 		},
 		{ &hf_lmp_nb,
-			{ "Nb", "btlmp.nb",
+			{ "Nb", "btbrlmp.nb",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_nbc,
-			{ "Nbc", "btlmp.nbc",
+			{ "Nbc", "btbrlmp.nbc",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_nbsleep,
-			{ "Nbsleep", "btlmp.nbsleep",
+			{ "Nbsleep", "btbrlmp.nbsleep",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_negstate,
-			{ "Negotiation State", "btlmp.negstate",
+			{ "Negotiation State", "btbrlmp.negstate",
 			FT_UINT8, BASE_DEC, VALS(negotiation_state), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_nonce,
-			{ "Nonce Value", "btlmp.nonce",
+			{ "Nonce Value", "btbrlmp.nonce",
 			FT_BYTES, BASE_NONE, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_nottype,
-			{ "Notification Type", "btlmp.nottype",
+			{ "Notification Type", "btbrlmp.nottype",
 			FT_UINT8, BASE_DEC, VALS(notification_value), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_npoll,
-			{ "Npoll", "btlmp.npoll",
+			{ "Npoll", "btbrlmp.npoll",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_oobauthdata,
-			{ "OOB Authentication Data", "btlmp.oobauthdata",
+			{ "OOB Authentication Data", "btbrlmp.oobauthdata",
 			FT_UINT8, BASE_DEC, VALS(oob_auth_data), 0xfe,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_op,
-			{ "Opcode", "btlmp.op",
+			{ "Opcode", "btbrlmp.op",
 			FT_UINT8, BASE_DEC, VALS(opcode), 0xfe,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_opinre,
-			{ "In Response To", "btlmp.opinre",
+			{ "In Response To", "btbrlmp.opinre",
 			FT_UINT8, BASE_DEC, VALS(opcode), 0x7f,
 			"Opcode this is in response to", HFILL }
 		},
 		{ &hf_lmp_pagesch,
-			{ "Paging Scheme", "btlmp.pagesch",
+			{ "Paging Scheme", "btbrlmp.pagesch",
 			FT_UINT8, BASE_DEC, VALS(paging_scheme), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pcmode,
-			{ "Power Control Mode", "btlmp.pcmode",
+			{ "Power Control Mode", "btbrlmp.pcmode",
 			FT_UINT8, BASE_DEC, VALS(power_control_mode), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pkttype,
-			{ "Packet Type", "btlmp.pkttype",
+			{ "Packet Type", "btbrlmp.pkttype",
 			/* FIXME break out further */
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			"Packet Type", HFILL }
 		},
 		{ &hf_lmp_pkttypetbl,
-			{ "Packet Type Table", "btlmp.pkttypetbl",
+			{ "Packet Type Table", "btbrlmp.pkttypetbl",
 			FT_UINT8, BASE_DEC, VALS(packet_type_table), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pmaddr,
-			{ "PM_ADDR", "btlmp.pmaddr",
+			{ "PM_ADDR", "btbrlmp.pmaddr",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pmaddr1,
-			{ "PM_ADDR 1", "btlmp.pmaddr1",
+			{ "PM_ADDR 1", "btbrlmp.pmaddr1",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pmaddr2,
-			{ "PM_ADDR 2", "btlmp.pmaddr2",
+			{ "PM_ADDR 2", "btbrlmp.pmaddr2",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pmaddr3,
-			{ "PM_ADDR 3", "btlmp.pmaddr3",
+			{ "PM_ADDR 3", "btbrlmp.pmaddr3",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pmaddr4,
-			{ "PM_ADDR 4", "btlmp.pmaddr4",
+			{ "PM_ADDR 4", "btbrlmp.pmaddr4",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pmaddr5,
-			{ "PM_ADDR 5", "btlmp.pmaddr5",
+			{ "PM_ADDR 5", "btbrlmp.pmaddr5",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pmaddr6,
-			{ "PM_ADDR 6", "btlmp.pmaddr6",
+			{ "PM_ADDR 6", "btbrlmp.pmaddr6",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pmaddr7,
-			{ "PM_ADDR 7", "btlmp.pmaddr7",
+			{ "PM_ADDR 7", "btbrlmp.pmaddr7",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pollintvl,
-			{ "Poll Interval", "btlmp.pollintvl",
+			{ "Poll Interval", "btbrlmp.pollintvl",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Poll Interval in slots", HFILL }
 		},
 		{ &hf_lmp_pollper,
-			{ "Poll Period", "btlmp.pollper",
+			{ "Poll Period", "btbrlmp.pollper",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			"Poll Period in units of 1.25 ms", HFILL }
 		},
 		{ &hf_lmp_pssettings,
-			{ "Paging Scheme Settings", "btlmp.pssettings",
+			{ "Paging Scheme Settings", "btbrlmp.pssettings",
 			FT_UINT8, BASE_DEC, VALS(paging_scheme_settings), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pwradjreq,
-			{ "Power Adjustment Request", "btlmp.pwradjreq",
+			{ "Power Adjustment Request", "btbrlmp.pwradjreq",
 			FT_UINT8, BASE_DEC, VALS(power_adjust_req), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pwradjres,
-			{ "Power Adjustment Response", "btlmp.pwradjres",
+			{ "Power Adjustment Response", "btbrlmp.pwradjres",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_pwradj_8dpsk,
-			{ "8DPSK", "btlmp.pwradj_8dpsk",
+			{ "8DPSK", "btbrlmp.pwradj_8dpsk",
 			FT_UINT8, BASE_DEC, VALS(power_adjust_res), 0x30,
 			"8DPSK Power Adjustment Response", HFILL }
 		},
 		{ &hf_lmp_pwradj_dqpsk,
-			{ "DQPSK", "btlmp.pwradj_dqpsk",
+			{ "DQPSK", "btbrlmp.pwradj_dqpsk",
 			FT_UINT8, BASE_DEC, VALS(power_adjust_res), 0x0C,
 			"DQPSK Power Adjustment Response", HFILL }
 		},
 		{ &hf_lmp_pwradj_gfsk,
-			{ "GFSK", "btlmp.pwradj_gfsk",
+			{ "GFSK", "btbrlmp.pwradj_gfsk",
 			FT_UINT8, BASE_DEC, VALS(power_adjust_res), 0x03,
 			"GFSK Power Adjustment Response", HFILL }
 		},
 		{ &hf_lmp_rand,
-			{ "Random Number", "btlmp.rand",
+			{ "Random Number", "btbrlmp.rand",
 			FT_BYTES, BASE_NONE, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_rate,
-			{ "Data Rate", "btlmp.rate",
+			{ "Data Rate", "btbrlmp.rate",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_rate_fec,
-			{ "FEC", "btlmp.rate.fec",
+			{ "FEC", "btbrlmp.rate.fec",
 			FT_BOOLEAN, BASE_DEC, TFS(&fec), 0x01,
 			"Forward Error Correction", HFILL }
 		},
 		{ &hf_lmp_rate_size,
-			{ "Packet Size", "btlmp.rate.size",
+			{ "Packet Size", "btbrlmp.rate.size",
 			FT_UINT8, BASE_HEX, VALS(packet_size), 0x06,
 			"Basic Rate Packet Size", HFILL }
 		},
 		{ &hf_lmp_rate_type,
-			{ "EDR Type", "btlmp.rate.type",
+			{ "EDR Type", "btbrlmp.rate.type",
 			FT_UINT8, BASE_HEX, VALS(edr_type), 0x18,
 			"Enhanced Data Rate type", HFILL }
 		},
 		{ &hf_lmp_rate_edrsize,
-			{ "EDR Size", "btlmp.rate.edrsize",
+			{ "EDR Size", "btbrlmp.rate.edrsize",
 			FT_UINT8, BASE_HEX, VALS(packet_size), 0x60,
 			"Enhanced Data Rate packet size", HFILL }
 		},
 		{ &hf_lmp_rxfreq,
-			{ "RX Frequency", "btlmp.rxfreq",
+			{ "RX Frequency", "btbrlmp.rxfreq",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			"Receive Frequency in MHz above 2402", HFILL }
 		},
 		{ &hf_lmp_scohdl,
-			{ "SCO Handle", "btlmp.scohdl",
+			{ "SCO Handle", "btbrlmp.scohdl",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_scopkt,
-			{ "SCO Packet", "btlmp.scopkt",
+			{ "SCO Packet", "btbrlmp.scopkt",
 			FT_UINT8, BASE_DEC, VALS(sco_packet), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_slotoffset,
-			{ "Slot Offset", "btlmp.slotoffset",
+			{ "Slot Offset", "btbrlmp.slotoffset",
 			FT_UINT16, BASE_DEC, NULL, 0x0,
 			"Slot Offset in microseconds", HFILL }
 		},
 		{ &hf_lmp_sniffatt,
-			{ "Sniff Attempt", "btlmp.sniffatt",
+			{ "Sniff Attempt", "btbrlmp.sniffatt",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Number of receive slots", HFILL }
 		},
 		{ &hf_lmp_sniffsi,
-			{ "Sniff Subrating Instant", "btlmp.sniffsi",
+			{ "Sniff Subrating Instant", "btbrlmp.sniffsi",
 			FT_UINT32, BASE_HEX, NULL, 0x0,
 			"Sniff Subrating Instant (slot)", HFILL }
 		},
 		{ &hf_lmp_sniffto,
-			{ "Sniff Timeout", "btlmp.sniffto",
+			{ "Sniff Timeout", "btbrlmp.sniffto",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Number of receive slots", HFILL }
 		},
 		{ &hf_lmp_subversnr,
-			{ "SubVersNr", "btlmp.subversnr",
+			{ "SubVersNr", "btbrlmp.subversnr",
 			FT_UINT16, BASE_DEC, NULL, 0x0,
 			"SubVersion", HFILL }
 		},
 		{ &hf_lmp_suptimeout,
-			{ "Supervision Timeout", "btlmp.suptimeout",
+			{ "Supervision Timeout", "btbrlmp.suptimeout",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Supervision Timeout in slots", HFILL }
 		},
 		{ &hf_lmp_swinst,
-			{ "Switch Instant", "btlmp.swinst",
+			{ "Switch Instant", "btbrlmp.swinst",
 			FT_UINT32, BASE_HEX, NULL, 0x0,
 			"Switch Instant (slot)", HFILL }
 		},
 		{ &hf_lmp_taccess,
-			{ "Taccess", "btlmp.taccess",
+			{ "Taccess", "btbrlmp.taccess",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			"Taccess in slots", HFILL }
 		},
 		{ &hf_lmp_tb,
-			{ "Tb", "btlmp.tb",
+			{ "Tb", "btbrlmp.tb",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Tb in slots", HFILL }
 		},
 		{ &hf_lmp_tesco,
-			{ "Tesco", "btlmp.tesco",
+			{ "Tesco", "btbrlmp.tesco",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			"Tesco in slots", HFILL }
 		},
 		{ &hf_lmp_testlen,
-			{ "Test Length", "btlmp.testlen",
+			{ "Test Length", "btbrlmp.testlen",
 			FT_UINT16, BASE_DEC, NULL, 0x0,
 			"Length of test sequence in bytes", HFILL }
 		},
 		{ &hf_lmp_testscen,
-			{ "Test Scenario", "btlmp.testscen",
+			{ "Test Scenario", "btbrlmp.testscen",
 			FT_UINT8, BASE_DEC, VALS(test_scenario), 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_tid,
-			{ "TID", "btlmp.tid",
+			{ "TID", "btbrlmp.tid",
 			FT_BOOLEAN, BASE_DEC, TFS(&tid), 0x01,
 			"Transaction ID", HFILL }
 		},
 		{ &hf_lmp_timectrl,
-			{ "Timing Control Flags", "btlmp.timectrl",
+			{ "Timing Control Flags", "btbrlmp.timectrl",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_time_change,
-			{ "Timing Change", "btlmp.time.change",
+			{ "Timing Change", "btbrlmp.time.change",
 			FT_BOOLEAN, 8, TFS(&time_change), 0x01,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_time_init,
-			{ "Initialization", "btlmp.time.init",
+			{ "Initialization", "btbrlmp.time.init",
 			FT_BOOLEAN, 8, TFS(&time_init), 0x02,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_time_accwin,
-			{ "Access Window", "btlmp.time.accwin",
+			{ "Access Window", "btbrlmp.time.accwin",
 			FT_BOOLEAN, 8, TFS(&time_accwin), 0x04,
 			NULL, HFILL }
 		},
 		{ &hf_lmp_tsco,
-			{ "Tsco", "btlmp.tsco",
+			{ "Tsco", "btbrlmp.tsco",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			"Tsco in slots", HFILL }
 		},
 		{ &hf_lmp_tsniff,
-			{ "Tsniff", "btlmp.tsniff",
+			{ "Tsniff", "btbrlmp.tsniff",
 			FT_UINT16, BASE_HEX, NULL, 0x0,
 			"Tsniff in slots", HFILL }
 		},
 		{ &hf_lmp_txfreq,
-			{ "TX Frequency", "btlmp.txfreq",
+			{ "TX Frequency", "btbrlmp.txfreq",
 			FT_UINT8, BASE_DEC, NULL, 0x0,
 			"Transmit Frequency in MHz above 2402", HFILL }
 		},
 		{ &hf_lmp_versnr,
-			{ "VersNr", "btlmp.versnr",
+			{ "VersNr", "btbrlmp.versnr",
 			FT_UINT8, BASE_DEC, VALS(versnr), 0x0,
 			"Version", HFILL }
 		},
 		{ &hf_lmp_wesco,
-			{ "Wesco", "btlmp.wesco",
+			{ "Wesco", "btbrlmp.wesco",
 			FT_UINT8, BASE_HEX, NULL, 0x0,
 			"Number of slots in retransmission window", HFILL }
 		},
@@ -2855,21 +2855,21 @@ proto_register_btlmp(void)
 	};
 
 	/* register the protocol name and description */
-	proto_btlmp = proto_register_protocol(
-		"Bluetooth Link Manager Protocol",	/* full name */
-		"btlmp",		/* short name */
-		"btlmp"			/* abbreviation (e.g. for filters) */
+	proto_btbrlmp = proto_register_protocol(
+		"Bluetooth BR Link Manager Protocol",	/* full name */
+		"btbrlmp",		/* short name */
+		"btbrlmp"			/* abbreviation (e.g. for filters) */
 		);
 
-	register_dissector("btlmp", dissect_btlmp, proto_btlmp);
+	register_dissector("btbrlmp", dissect_btbrlmp, proto_btbrlmp);
 
 	/* register the header fields and subtrees used */
-	proto_register_field_array(proto_btlmp, hf, array_length(hf));
+	proto_register_field_array(proto_btbrlmp, hf, array_length(hf));
 	proto_register_subtree_array(ett, array_length(ett));
 }
 
 void
-proto_reg_handoff_btlmp(void)
+proto_reg_handoff_btbrlmp(void)
 {
 }
 

@@ -42,10 +42,9 @@
 #define BTBB_FOLLOWING         14
 
 /* Payload modulation */
-#define BTBB_MOD_UNKNOWN           0x00
-#define BTBB_MOD_GFSK              0x01
-#define BTBB_MOD_PI_OVER_2_DQPSK   0x02
-#define BTBB_MOD_8DPSK             0x03
+#define BTBB_MOD_GFSK              0x00
+#define BTBB_MOD_PI_OVER_2_DQPSK   0x01
+#define BTBB_MOD_8DPSK             0x02
 
 /* Transport types */
 #define BTBB_TRANSPORT_ANY     0x00
@@ -180,7 +179,9 @@ void btbb_piconet_set_clk_offset(btbb_piconet *pn, int clk_offset);
 void btbb_piconet_set_flag(btbb_piconet *pn, int flag, int val);
 int btbb_piconet_get_flag(const btbb_piconet *pn, int flag);
 
-void btbb_piconet_set_channel_seen(btbb_piconet *pn, uint8_t channel);
+uint8_t btbb_piconet_set_channel_seen(btbb_piconet *pn, uint8_t channel);
+uint8_t btbb_piconet_clear_channel_seen(btbb_piconet *pn, uint8_t channel);
+uint8_t btbb_piconet_get_channel_seen(btbb_piconet *pn, uint8_t channel);
 void btbb_piconet_set_afh_map(btbb_piconet *pn, uint8_t *afh_map);
 uint8_t *btbb_piconet_get_afh_map(btbb_piconet *pn);
 
@@ -253,7 +254,6 @@ int lell_pcapng_close(lell_pcapng_handle *h);
 
 
 /* PCAP Support */
-#if defined(ENABLE_PCAP)
 typedef struct btbb_pcap_handle btbb_pcap_handle;
 /* create a PCAP file for BREDR captures with LINKTYPE_BLUETOOTH_BREDR_BB */
 int btbb_pcap_create_file(const char *filename, btbb_pcap_handle ** ph);
@@ -279,7 +279,6 @@ int lell_pcap_append_ppi_packet(lell_pcap_handle * h, const uint64_t ns,
                                 const int8_t rssi_avg, const uint8_t rssi_count,
                                 const lell_packet *pkt);
 int lell_pcap_close(lell_pcap_handle *h);
-#endif // ENABLE_PCAP
 
 #ifdef __cplusplus
 } // __cplusplus defined.

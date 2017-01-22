@@ -30,6 +30,9 @@
 #include <ctype.h>
 #include <string.h>
 
+/* company identifier lookup */
+const char *bt_compidtostr(uint16_t compid);
+
 /* string representations of advertising packet type */
 static const char *ADV_TYPE_NAMES[] = {
 	"ADV_IND", "ADV_DIRECT_IND", "ADV_NONCONN_IND", "SCAN_REQ",
@@ -41,6 +44,15 @@ static const char *CONNECT_SCA[] = {
 	"251 ppm to 500 ppm", "151 ppm to 250 ppm", "101 ppm to 150 ppm",
 	"76 ppm to 100 ppm", "51 ppm to 75 ppm", "31 ppm to 50 ppm",
 	"21 ppm to 30 ppm", "0 ppm to 20 ppm",
+};
+
+/* flags */
+static const char *FLAGS[] = {
+	"LE Limited Discoverable Mode", "LE General Discoverable Mode",
+	"BR/EDR Not Supported",
+	"Simultaneous LE and BR/EDR to Same Device Capable (Controller)",
+	"Simultaneous LE and BR/EDR to Same Device Capable (Host)",
+	"Reserved", "Reserved", "Reserved",
 };
 
 // count of objects in an array, shamelessly stolen from Chrome
@@ -409,6 +421,26 @@ static void _dump_scan_rsp_data(const uint8_t *buf, int len) {
 				for (i = 0; i < 8; ++i)
 					printf("%d", buf[pos+1] & (1 << (7-i)) ? 1 : 0);
 				printf("\n");
+				for (i = 0; i < 8; ++i) {
+					if (buf[pos+1] & (1 << i)) {
+						printf("               ");
+						printf("%s\n", FLAGS[i]);
+					}
+				}
+				printf("\n");
+				break;
+			case 0x02:
+				printf(" (16-bit Service UUIDs, more available)\n");
+				goto print16;
+			case 0x03:
+				printf(" (16-bit Service UUIDs) \n");
+print16:
+				if ((sublen - 1) % 2 == 0) {
+					for (i = 0; i < sublen - 1; i += 2) {
+						uint16_t *uuid = (uint16_t *)&buf[pos+1+i];
+						printf("           %04x\n", *uuid);
+					}
+				}
 				break;
 			case 0x06:
 				printf(" (128-bit Service UUIDs, more available)\n");
@@ -472,6 +504,22 @@ print128:
 						for (i = 3; i < sublen; ++i)
 							printf(" %02x", buf[pos+i]);
 					}
+					printf("\n");
+				}
+				else {
+					printf("Wrong length (%d, should be >= 2)\n", sublen-1);
+				}
+				break;
+			case 0xff:
+				printf(" (Manufacturer Specific Data)\n");
+				printf("           ");
+				if (sublen - 1 >= 2) {
+					uint16_t company = (buf[pos+2] << 8) | buf[pos+1];
+					printf("Company: %s\n", bt_compidtostr(company));
+					printf("           ");
+					printf("Data:");
+					for (i = 3; i < sublen; ++i)
+						printf(" %02x", buf[pos+i]);
 					printf("\n");
 				}
 				else {
@@ -549,6 +597,8 @@ void lell_print(const lell_packet *pkt)
 
 		switch(pkt->adv_type) {
 			case ADV_IND:
+			case ADV_NONCONN_IND:
+			case ADV_SCAN_IND:
 				_dump_addr("AdvA:  ", pkt->symbols, 6, pkt->adv_tx_add);
 				if (pkt->length-6 > 0) {
 					printf("    AdvData:");
@@ -557,6 +607,10 @@ void lell_print(const lell_packet *pkt)
 					printf("\n");
 					_dump_scan_rsp_data(&pkt->symbols[12], pkt->length-6);
 				}
+				break;
+			case ADV_DIRECT_IND:
+				_dump_addr("AdvA:  ", pkt->symbols, 6, pkt->adv_tx_add);
+				_dump_addr("InitA: ", pkt->symbols, 12, pkt->adv_rx_add);
 				break;
 			case SCAN_REQ:
 				_dump_addr("ScanA: ", pkt->symbols, 6, pkt->adv_tx_add);

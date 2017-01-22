@@ -759,7 +759,7 @@ void
 dissect_name_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_nameoffset, tvb, offset, 1, ENC_NA);
 }
@@ -768,7 +768,7 @@ void
 dissect_name_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_nameoffset, tvb, offset, 1, ENC_NA);
 	offset += 1;
@@ -783,7 +783,7 @@ void
 dissect_accepted(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_opinre, tvb, offset, 1, ENC_NA);
 }
@@ -792,7 +792,7 @@ void
 dissect_not_accepted(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_opinre, tvb, offset, 1, ENC_NA);
 	offset += 1;
@@ -810,7 +810,7 @@ void
 dissect_clkoffset_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_clkoffset, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 }
@@ -819,7 +819,7 @@ void
 dissect_detach(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_err, tvb, offset, 1, ENC_NA);
 }
@@ -828,7 +828,7 @@ void
 dissect_in_rand(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_rand, tvb, offset, 16, ENC_NA);
 }
@@ -837,7 +837,7 @@ void
 dissect_comb_key(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_rand, tvb, offset, 16, ENC_NA);
 }
@@ -846,7 +846,7 @@ void
 dissect_unit_key(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_key, tvb, offset, 16, ENC_NA);
 }
@@ -855,7 +855,7 @@ void
 dissect_au_rand(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_rand, tvb, offset, 16, ENC_NA);
 }
@@ -864,7 +864,7 @@ void
 dissect_sres(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 5);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 4);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 4);
 
 	proto_tree_add_item(tree, hf_lmp_authres, tvb, offset, 4, ENC_NA);
 }
@@ -873,7 +873,7 @@ void
 dissect_temp_rand(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_rand, tvb, offset, 16, ENC_NA);
 }
@@ -882,7 +882,7 @@ void
 dissect_temp_key(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_key, tvb, offset, 16, ENC_NA);
 }
@@ -891,7 +891,7 @@ void
 dissect_encryption_mode_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_cryptmode, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -900,7 +900,7 @@ void
 dissect_encryption_key_size_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_keysz, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -909,7 +909,7 @@ void
 dissect_start_encryption_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_rand, tvb, offset, 16, ENC_NA);
 }
@@ -924,7 +924,7 @@ void
 dissect_switch_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 5);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 4);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 4);
 
 	proto_tree_add_item(tree, hf_lmp_swinst, tvb, offset, 4, ENC_LITTLE_ENDIAN);
 }
@@ -933,7 +933,7 @@ void
 dissect_hold(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 7);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 6);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 6);
 
 	proto_tree_add_item(tree, hf_lmp_htime, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 	offset += 2;
@@ -945,7 +945,7 @@ void
 dissect_hold_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 7);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 6);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 6);
 
 	proto_tree_add_item(tree, hf_lmp_htime, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 	offset += 2;
@@ -957,7 +957,7 @@ void
 dissect_sniff_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 10);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 9);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 9);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -985,7 +985,7 @@ void
 dissect_park_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -1036,7 +1036,7 @@ dissect_set_broadcast_scan_window(proto_tree *tree, tvbuff_t *tvb, int offset, i
 {
 	int db_present;
 
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -1047,13 +1047,13 @@ dissect_set_broadcast_scan_window(proto_tree *tree, tvbuff_t *tvb, int offset, i
 
 	if (db_present) {
 		DISSECTOR_ASSERT(len == 6);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 4);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 4);
 
 		proto_tree_add_item(tree, hf_lmp_db, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 		offset += 2;
 	} else {
 		DISSECTOR_ASSERT(len == 4);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 	}
 
 	proto_tree_add_item(tree, hf_lmp_bsw, tvb, offset, 2, ENC_LITTLE_ENDIAN);
@@ -1064,7 +1064,7 @@ dissect_modify_beacon(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	int db_present;
 
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -1075,13 +1075,13 @@ dissect_modify_beacon(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 
 	if (db_present) {
 		DISSECTOR_ASSERT(len == 13);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 11);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 11);
 
 		proto_tree_add_item(tree, hf_lmp_db, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 		offset += 2;
 	} else {
 		DISSECTOR_ASSERT(len == 11);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 9);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 9);
 	}
 
 	proto_tree_add_item(tree, hf_lmp_tb, tvb, offset, 2, ENC_LITTLE_ENDIAN);
@@ -1115,7 +1115,7 @@ dissect_unpark_bd_addr_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 	int db_present;
 	proto_item *item;
 
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -1126,13 +1126,13 @@ dissect_unpark_bd_addr_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 
 	if (db_present) {
 		DISSECTOR_ASSERT(len == 17);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 15);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 15);
 
 		proto_tree_add_item(tree, hf_lmp_db, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 		offset += 2;
 	} else {
 		DISSECTOR_ASSERT(len == 15);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 13);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 13);
 	}
 
 	proto_tree_add_item(tree, hf_lmp_ltaddr1, tvb, offset, 1, ENC_LITTLE_ENDIAN);
@@ -1151,7 +1151,7 @@ dissect_unpark_pm_addr_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	int db_present;
 
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_bitmask(tree, tvb, offset, hf_lmp_timectrl,
 			ett_lmp_timectrl, timectrl_fields, ENC_LITTLE_ENDIAN);
@@ -1162,13 +1162,13 @@ dissect_unpark_pm_addr_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 
 	if (db_present) {
 		DISSECTOR_ASSERT(len == 15);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 13);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 13);
 
 		proto_tree_add_item(tree, hf_lmp_db, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 		offset += 2;
 	} else {
 		DISSECTOR_ASSERT(len == 13);
-		DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 11);
+		DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 11);
 	}
 
 	proto_tree_add_item(tree, hf_lmp_ltaddr1, tvb, offset, 1, ENC_LITTLE_ENDIAN);
@@ -1248,7 +1248,7 @@ dissect_preferred_rate(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 	proto_tree *rate_tree;
 
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	rate_item = proto_tree_add_item(tree, hf_lmp_rate, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	rate_tree = proto_item_add_subtree(rate_item, ett_lmp_rate);
@@ -1263,7 +1263,7 @@ void
 dissect_version_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 6);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 5);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 5);
 
 	proto_tree_add_item(tree, hf_lmp_versnr, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1278,7 +1278,7 @@ void
 dissect_version_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 6);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 5);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 5);
 
 	proto_tree_add_item(tree, hf_lmp_versnr, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1293,7 +1293,7 @@ void
 dissect_features_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 9);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 8);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 8);
 
 	proto_tree_add_item(tree, hf_lmp_features, tvb, offset, 8, ENC_NA);
 }
@@ -1302,7 +1302,7 @@ void
 dissect_features_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 9);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 8);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 8);
 
 	proto_tree_add_item(tree, hf_lmp_features, tvb, offset, 8, ENC_NA);
 }
@@ -1311,7 +1311,7 @@ void
 dissect_quality_of_service(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 3);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 3);
 
 	proto_tree_add_item(tree, hf_lmp_pollintvl, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 	offset += 2;
@@ -1323,7 +1323,7 @@ void
 dissect_quality_of_service_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 3);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 3);
 
 	proto_tree_add_item(tree, hf_lmp_pollintvl, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 	offset += 2;
@@ -1335,7 +1335,7 @@ void
 dissect_sco_link_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 7);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 6);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 6);
 
 	proto_tree_add_item(tree, hf_lmp_scohdl, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1360,7 +1360,7 @@ void
 dissect_remove_sco_link_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_scohdl, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1372,7 +1372,7 @@ void
 dissect_max_slot(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_maxslots, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -1381,7 +1381,7 @@ void
 dissect_max_slot_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 2);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_maxslots, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -1396,7 +1396,7 @@ void
 dissect_timing_accuracy_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_drift, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1426,7 +1426,7 @@ void
 dissect_slot_offset(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 9);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 8);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 8);
 
 	proto_tree_add_item(tree, hf_lmp_slotoffset, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 	offset += 2;
@@ -1438,7 +1438,7 @@ void
 dissect_page_mode_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_pagesch, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1450,7 +1450,7 @@ void
 dissect_page_scan_mode_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_pagesch, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1462,7 +1462,7 @@ void
 dissect_supervision_timeout(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_suptimeout, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 }
@@ -1477,7 +1477,7 @@ void
 dissect_test_control(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 10);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 9);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 9);
 
 	/* FIXME these fields should all be XORed with 0x55. . . */
 
@@ -1515,7 +1515,7 @@ void
 dissect_encryption_key_size_mask_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_ksmask, tvb, offset, 2, ENC_LITTLE_ENDIAN);
 }
@@ -1524,7 +1524,7 @@ void
 dissect_set_afh(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 16);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 15);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 15);
 
 	proto_tree_add_item(tree, hf_lmp_afhinst, tvb, offset, 4, ENC_LITTLE_ENDIAN);
 	offset += 4;
@@ -1539,7 +1539,7 @@ void
 dissect_encapsulated_header(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 3);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 3);
 
 	proto_tree_add_item(tree, hf_lmp_encmaj, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1554,7 +1554,7 @@ void
 dissect_encapsulated_payload(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_encdata, tvb, offset, 16, ENC_NA);
 }
@@ -1563,7 +1563,7 @@ void
 dissect_simple_pairing_confirm(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_commit, tvb, offset, 16, ENC_NA);
 }
@@ -1572,7 +1572,7 @@ void
 dissect_simple_pairing_number(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_nonce, tvb, offset, 16, ENC_NA);
 }
@@ -1581,7 +1581,7 @@ void
 dissect_dhkey_check(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 17);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 16);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 16);
 
 	proto_tree_add_item(tree, hf_lmp_confirm, tvb, offset, 16, ENC_NA);
 }
@@ -1592,7 +1592,7 @@ void
 dissect_accepted_ext(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_opinre, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1604,7 +1604,7 @@ void
 dissect_not_accepted_ext(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_opinre, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1619,7 +1619,7 @@ void
 dissect_features_req_ext(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 12);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 10);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 10);
 
 	proto_tree_add_item(tree, hf_lmp_fpage, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1638,7 +1638,7 @@ void
 dissect_features_res_ext(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 12);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 10);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 10);
 
 	proto_tree_add_item(tree, hf_lmp_fpage, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1657,7 +1657,7 @@ void
 dissect_packet_type_table_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_pkttypetbl, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -1666,7 +1666,7 @@ void
 dissect_esco_link_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 16);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 14);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 14);
 
 	proto_tree_add_item(tree, hf_lmp_escohdl, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1709,7 +1709,7 @@ void
 dissect_remove_esco_link_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 4);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 2);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 2);
 
 	proto_tree_add_item(tree, hf_lmp_escohdl, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1721,7 +1721,7 @@ void
 dissect_channel_classification_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 7);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 5);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 5);
 
 	proto_tree_add_item(tree, hf_lmp_afhrptmode, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1736,7 +1736,7 @@ void
 dissect_channel_classification(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 12);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 10);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 10);
 
 	proto_tree_add_item(tree, hf_lmp_afhclass, tvb, offset, 10, ENC_NA);
 }
@@ -1745,7 +1745,7 @@ void
 dissect_sniff_subrating_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 9);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 7);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 7);
 
 	proto_tree_add_item(tree, hf_lmp_maxss, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1760,7 +1760,7 @@ void
 dissect_sniff_subrating_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 9);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 7);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 7);
 
 	proto_tree_add_item(tree, hf_lmp_maxss, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1787,7 +1787,7 @@ void
 dissect_io_capability_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 5);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 3);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 3);
 
 	proto_tree_add_item(tree, hf_lmp_iocaps, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1802,7 +1802,7 @@ void
 dissect_io_capability_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 5);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 3);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 3);
 
 	proto_tree_add_item(tree, hf_lmp_iocaps, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	offset += 1;
@@ -1835,7 +1835,7 @@ void
 dissect_keypress_notification(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_nottype, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -1844,7 +1844,7 @@ void
 dissect_power_control_req(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 {
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	proto_tree_add_item(tree, hf_lmp_pwradjreq, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 }
@@ -1856,7 +1856,7 @@ dissect_power_control_res(proto_tree *tree, tvbuff_t *tvb, int offset, int len)
 	proto_tree *pa_tree;
 
 	DISSECTOR_ASSERT(len == 3);
-	DISSECTOR_ASSERT(tvb_reported_length_remaining(tvb, offset) >= 1);
+	DISSECTOR_ASSERT(tvb_length_remaining(tvb, offset) >= 1);
 
 	pa_item = proto_tree_add_item(tree, hf_lmp_pwradjres, tvb, offset, 1, ENC_LITTLE_ENDIAN);
 	pa_tree = proto_item_add_subtree(pa_item, ett_lmp_pwradjres);
@@ -1878,7 +1878,7 @@ dissect_btlmp(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 	int eop;    /* extended opcode */
 
 	offset = 0;
-	len = tvb_reported_length(tvb);
+	len = tvb_length(tvb);
 
 	DISSECTOR_ASSERT(len >= 1);
 
