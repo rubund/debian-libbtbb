@@ -9,17 +9,11 @@ Copyright: 2007-2014 Mike Ossmann, Dominic Spill, Will Code
 License: GPL-2+
 
 Files: wireshark/plugins/btbredr/cmake/FindWireshark.cmake
-       wireshark/plugins/btatt/cmake/FindWireshark.cmake
-       wireshark/plugins/btle/cmake/FindWireshark.cmake
-       wireshark/plugins/btsm/cmake/FindWireshark.cmake
        wireshark/plugins/btbb/cmake/FindWireshark.cmake
 Copyright: 2011 Reinhold Kainhofer <reinhold@kainhofer.com>
 License: BSD-3-clause
 
 Files: wireshark/plugins/btbredr/cmake/FindGLIB2.cmake
-       wireshark/plugins/btatt/cmake/FindGLIB2.cmake
-       wireshark/plugins/btle/cmake/FindGLIB2.cmake
-       wireshark/plugins/btsm/cmake/FindGLIB2.cmake
        wireshark/plugins/btbb/cmake/FindGLIB2.cmake
 Copyright: 2006 Andreas Schneider <mail@cynapses.org>
            2006 Philippe Bernery <philippe.bernery@gmail.com>
@@ -30,15 +24,6 @@ Copyright: 2006 Andreas Schneider <mail@cynapses.org>
 License: BSD-3-clause
 
 Files: wireshark/plugins/btbredr/CMakeLists.txt
-       wireshark/plugins/btatt/CMakeLists.txt
-       wireshark/plugins/btatt/Makefile.common
-       wireshark/plugins/btatt/Makefile.am
-       wireshark/plugins/btle/CMakeLists.txt
-       wireshark/plugins/btle/Makefile.common
-       wireshark/plugins/btle/Makefile.am
-       wireshark/plugins/btsm/CMakeLists.txt
-       wireshark/plugins/btsm/Makefile.common
-       wireshark/plugins/btsm/Makefile.am
        wireshark/plugins/btbb/CMakeLists.txt
 Copyright: 1998 Gerald Combs
 License: GPL-2+
@@ -56,7 +41,6 @@ Copyright: 1998 Gerald Combs
 License: GPL-2+
 
 Files: wireshark/plugins/btbredr/plugin.rc.in
-       wireshark/plugins/btsm/plugin.rc.in
        wireshark/plugins/btbb/plugin.rc.in
 Copyright: 1998 Gerald Combs <gerald@wireshark.org>
            1998 Gilmert Ramirez <gram@alumni.rice.edu>
@@ -64,12 +48,6 @@ License: GPL-2+
 
 Files: wireshark/plugins/btatt/packet-btatt.c
 Copyright: 2012 Allan M. Madsen <allan.m@madsen.dk>
-License: GPL-2+
-
-Files: wireshark/plugins/btle/wireshark-1.8-btle-ppi.patch
-       wireshark/plugins/btsm/packet-btsm.c
-Copyright: 1998 Gerald Combs
-           2013 Mike Ryan
 License: GPL-2+
 
 Files: cmake/modules/CMakeParseArguments.cmake
