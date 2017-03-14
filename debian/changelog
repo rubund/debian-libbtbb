@@ -1,8 +1,8 @@
-libbtbb (2017-03-R1+20170304git363eaea-1) UNRELEASED; urgency=low
+libbtbb (2017.03.R2-1) experimental; urgency=low
 
-  * New upstream version
+  * New upstream release
 
- -- Ruben Undheim <ruben.undheim@gmail.com>  Sun, 22 Jan 2017 11:28:26 +0100
+ -- Ruben Undheim <ruben.undheim@gmail.com>  Tue, 14 Mar 2017 16:05:51 +0100
 
 libbtbb (2015.09.R2-1) unstable; urgency=low
 
