@@ -3,17 +3,24 @@ Upstream-Name: libbtbb
 Source: https://github.com/greatscottgadgets/libbtbb
 
 Files: *
-Copyright: 2007-2014 Mike Ossmann, Dominic Spill, Will Code
+Copyright: 2007-2014 Mike Ossmann, Will Code
+           2007-2017 Dominic Spill
            2010-2014 Jared Boone
            2012-2014 Mike Ryan, Christopher Kilgour
 License: GPL-2+
 
 Files: wireshark/plugins/btbredr/cmake/FindWireshark.cmake
+       wireshark/plugins-legacy/btatt/cmake/FindWireshark.cmake
+       wireshark/plugins-legacy/btle/cmake/FindWireshark.cmake
+       wireshark/plugins-legacy/btsm/cmake/FindWireshark.cmake
        wireshark/plugins/btbb/cmake/FindWireshark.cmake
 Copyright: 2011 Reinhold Kainhofer <reinhold@kainhofer.com>
 License: BSD-3-clause
 
 Files: wireshark/plugins/btbredr/cmake/FindGLIB2.cmake
+       wireshark/plugins-legacy/btatt/cmake/FindGLIB2.cmake
+       wireshark/plugins-legacy/btle/cmake/FindGLIB2.cmake
+       wireshark/plugins-legacy/btsm/cmake/FindGLIB2.cmake
        wireshark/plugins/btbb/cmake/FindGLIB2.cmake
 Copyright: 2006 Andreas Schneider <mail@cynapses.org>
            2006 Philippe Bernery <philippe.bernery@gmail.com>
@@ -24,12 +31,20 @@ Copyright: 2006 Andreas Schneider <mail@cynapses.org>
 License: BSD-3-clause
 
 Files: wireshark/plugins/btbredr/CMakeLists.txt
+       wireshark/plugins-legacy/btatt/CMakeLists.txt
+       wireshark/plugins-legacy/btatt/Makefile.common
+       wireshark/plugins-legacy/btatt/Makefile.am
+       wireshark/plugins-legacy/btle/CMakeLists.txt
+       wireshark/plugins-legacy/btle/Makefile.common
+       wireshark/plugins-legacy/btle/Makefile.am
+       wireshark/plugins-legacy/btsm/CMakeLists.txt
+       wireshark/plugins-legacy/btsm/Makefile.common
+       wireshark/plugins-legacy/btsm/Makefile.am
        wireshark/plugins/btbb/CMakeLists.txt
 Copyright: 1998 Gerald Combs
 License: GPL-2+
 
 Files: wireshark/plugins/btbredr/packet-btlmp.c
-       wireshark/plugins/btbb/packet-btlmp.c
 Copyright: 1998 Gerald Combs
            2009 Michael Ossmann <mike@ossmann.com>
 License: GPL-2+
@@ -41,13 +56,20 @@ Copyright: 1998 Gerald Combs
 License: GPL-2+
 
 Files: wireshark/plugins/btbredr/plugin.rc.in
+       wireshark/plugins-legacy/btsm/plugin.rc.in
        wireshark/plugins/btbb/plugin.rc.in
 Copyright: 1998 Gerald Combs <gerald@wireshark.org>
            1998 Gilmert Ramirez <gram@alumni.rice.edu>
 License: GPL-2+
 
-Files: wireshark/plugins/btatt/packet-btatt.c
+Files: wireshark/plugins-legacy/btatt/packet-btatt.c
 Copyright: 2012 Allan M. Madsen <allan.m@madsen.dk>
+License: GPL-2+
+
+Files: wireshark/plugins-legacy/btle/wireshark-1.8-btle-ppi.patch
+       wireshark/plugins-legacy/btsm/packet-btsm.c
+Copyright: 1998 Gerald Combs
+           2013 Mike Ryan
 License: GPL-2+
 
 Files: cmake/modules/CMakeParseArguments.cmake
@@ -62,10 +84,6 @@ Files: cmake/modules/GetGitRevisionDescription.cmake.in
        cmake/modules/GetGitRevisionDescription.cmake
 Copyright: 2009-2010 Iowa State University
 License: Boost-1.0
-
-Files: cmake/modules/FindPCAP.cmake
-Copyright: 2006 Frederic Heem <frederic.heem@telsey.it>
-License: BSD-3-clause
 
 Files: cmake/modules/FindPythonInterp.cmake
 Copyright: 2005-2010 Kitware, Inc.
@@ -89,6 +107,12 @@ License: GPL-2+
 Files: lib/src/uthash.h
 Copyright: 2003-2014 Troy D. Hanson
 License: uthash-license
+
+Files: lib/src/companies.c
+Copyright: 2000-2001  Qualcomm Incorporated
+           2002-2003  Maxim Krasnyansky <maxk@qualcomm.com>
+           2002-2010  Marcel Holtmann <marcel@holtmann.org>
+License: GPL-2+
 
 Files: debian/*
 Copyright: 2014 Ruben Undheim <ruben.undheim@gmail.com>
