@@ -1,4 +1,4 @@
-libbtbb (2017.03.R2-1) experimental; urgency=low
+libbtbb (2017.03.R2-1~exp1) experimental; urgency=low
 
   * New upstream release
   * libbtbb0 -> libbtbb1
