@@ -1,3 +1,10 @@
+libbtbb (2017.03.R2-1) unstable; urgency=low
+
+  * Upload to unstable
+  * debian/control: New standards version 4.0.0 - no changes
+
+ -- Ruben Undheim <ruben.undheim@gmail.com>  Thu, 13 Jul 2017 22:58:37 +0200
+
 libbtbb (2017.03.R2-1~exp1) experimental; urgency=low
 
   * New upstream release

@@ -6,7 +6,7 @@ Build-Depends: debhelper (>= 9),
                libpcap-dev,
                python-all-dev,
                cmake
-Standards-Version: 3.9.8
+Standards-Version: 4.0.0
 Vcs-Git: https://github.com/rubund/debian-libbtbb.git
 Vcs-Browser: https://github.com/rubund/debian-libbtbb/tree/master
 Homepage: http://libbtbb.sourceforge.net/
