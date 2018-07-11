@@ -4,7 +4,11 @@ libbtbb (2017.03.R2-2) unstable; urgency=medium
   * Demote python-all-dev to Build-Depends-Indep. (Closes: #893890)
 
   [ Ruben Undheim ]
-  * Some lintian fixes
+  * debian/control:
+    - New standards version 4.1.5 - no changes
+  * debian/copyright:
+    - Use https protocol in Format field
+  * debian/libbtbb1.lintian-overrides: to make spelling error lintian silent
 
  -- Ruben Undheim <ruben.undheim@gmail.com>  Wed, 11 Jul 2018 15:51:14 +0200
 
