@@ -1,9 +1,16 @@
-Description: Fixes the install command for the python part
-Author: Ruben Undheim <ruben.undheim@gmail.com>
+From: Ruben Undheim <ruben.undheim@gmail.com>
+Date: Wed, 11 Jul 2018 15:47:59 +0200
+Subject: Fixes the install command for the python part
 
---- libbtbb-2014.11.26+gitf83b85c.orig/python/pcaptools/CMakeLists.txt
-+++ libbtbb-2014.11.26+gitf83b85c/python/pcaptools/CMakeLists.txt
-@@ -31,7 +31,7 @@ add_custom_command(OUTPUT ${OUTPUT}/time
+---
+ python/pcaptools/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/python/pcaptools/CMakeLists.txt b/python/pcaptools/CMakeLists.txt
+index 78cfec9..3758d69 100644
+--- a/python/pcaptools/CMakeLists.txt
++++ b/python/pcaptools/CMakeLists.txt
+@@ -31,7 +31,7 @@ add_custom_command(OUTPUT ${OUTPUT}/timestamp
                     DEPENDS ${DEPS})
  
  add_custom_target(pcapdump ALL DEPENDS ${OUTPUT}/timestamp)
