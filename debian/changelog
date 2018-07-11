@@ -1,3 +1,13 @@
+libbtbb (2017.03.R2-2) unstable; urgency=medium
+
+  [ Helmut Grohne ]
+  * Demote python-all-dev to Build-Depends-Indep. (Closes: #893890)
+
+  [ Ruben Undheim ]
+  * Some lintian fixes
+
+ -- Ruben Undheim <ruben.undheim@gmail.com>  Wed, 11 Jul 2018 15:51:14 +0200
+
 libbtbb (2017.03.R2-1) unstable; urgency=low
 
   * Upload to unstable
