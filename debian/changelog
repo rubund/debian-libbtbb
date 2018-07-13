@@ -1,3 +1,9 @@
+libbtbb (2018.06.R1-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Ruben Undheim <ruben.undheim@gmail.com>  Fri, 13 Jul 2018 16:21:08 +0200
+
 libbtbb (2017.03.R2-2) unstable; urgency=medium
 
   [ Helmut Grohne ]
