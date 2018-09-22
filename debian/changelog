@@ -1,3 +1,16 @@
+libbtbb (2018.08.R1-1) UNRELEASED; urgency=medium
+
+  * New upstream release
+  * debian/compat: level 11
+  * debian/control:
+    - debhelper >= 11
+    - New standards version 4.2.1 - no changes
+  * debian/tests:
+    - Added autopkgtest to verify that it is possible to link with the library.
+  * debian/upstream/metadata: added metadata file
+
+ -- Ruben Undheim <ruben.undheim@gmail.com>  Sat, 22 Sep 2018 15:08:16 +0200
+
 libbtbb (2018.06.R1-1) unstable; urgency=medium
 
   * New upstream release
